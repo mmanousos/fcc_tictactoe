@@ -1,0 +1,49 @@
+/* ASSIGNMENT */
+
+Build a Tic Tac Toe Game
+
+Objective: Build a CodePen.io app that is functionally similar to this: https://codepen.io/FreeCodeCamp/full/KzXQgy/.
+
+Fulfill the below user stories. Use whichever libraries or APIs you need. Give it your own personal style.
+
+- User Story: I can play a game of Tic Tac Toe with the computer.
+
+- User Story: My game will reset as soon as it's over so I can play again.
+
+- User Story: I can choose whether I want to play as X or O.
+
+
+/* DESIGN NOTES */
+
+markers will be black
+purple background
+
+https://www.iconsdb.com/black-icons/circle-outline-icon.html
+https://www.iconsdb.com/black-icons/x-mark-icon.html
+
+- want a way to indicate who's turn it is (x or o)
+- want to display winner or draw at end of game
+- want to display line through the 3 marks in a row when one player wins
+
+
+Color pallete: http://paletton.com/#uid=54W0u0krZtneaRGlkAmu9jrDL5z
+
+Fonts: 
+<link href="https://fonts.googleapis.com/css?family=Hind:400,600" rel="stylesheet">
+
+font-family: 'Hind', sans-serif;
+
+/* PSEUDOCODE */
+
+If user selects X, computer plays as O. 
+Else, computer plays as X.
+
+designate each box it's own value? 
+a1, a2, a3
+b1, b2, b3
+c1, c2, c3 
+
+or 1-9 
+
+What will be logic to have program block ?? 
+
