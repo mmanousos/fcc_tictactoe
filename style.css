@@ -1,0 +1,46 @@
+body {
+    font-family: 'Hind', sans-serif !important;
+    font-size: 25px;
+}
+
+.game-display {
+    /*background-color: #83179A;*/
+    background-color: #8906E2;
+    height: auto;
+    border: 1px solid #000;
+    margin-top: 20px;
+}
+
+.overlay {
+    margin: 50px 0;
+    text-align: center;
+}
+
+.form-check {
+    margin-left: 100px;
+}
+
+.big-checkbox {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+}
+
+.icon {
+    width: 50px;
+}
+
+.credit {
+    margin-top: 20px;
+    font-size: 50%;
+    font-style: italic;
+    color: #5D0499;
+}
+
+.credit p {
+    text-align: center; 
+}
+
+.credit a {
+    color: #B05CE9;
+}
