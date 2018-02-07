@@ -1,6 +1,6 @@
 body {
     font-family: 'Hind', sans-serif !important;
-    font-size: 25px;
+    font-size: 22px;
 }
 
 .game-display {
@@ -16,18 +16,13 @@ body {
     text-align: center;
 }
 
-.form-check {
-    margin-left: 100px;
-}
-
-.big-checkbox {
-    width: 30px;
-    height: 30px;
-    vertical-align: middle;
+.overlay p {
+    font-weight: 600;
 }
 
 .icon {
-    width: 50px;
+    height: 75px;
+    margin: 20px;
 }
 
 .credit {
