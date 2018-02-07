@@ -3,14 +3,20 @@ body {
     font-size: 22px;
 }
 
+.icon {
+    height: 75px;
+    margin: 20px;
+}
+
+/* main display area */
 .game-display {
-    /*background-color: #83179A;*/
     background-color: #8906E2;
     height: auto;
     border: 1px solid #000;
     margin-top: 20px;
 }
 
+/* player marker selection screen */
 .overlay {
     margin: 50px 0;
     text-align: center;
@@ -20,11 +26,24 @@ body {
     font-weight: 600;
 }
 
-.icon {
-    height: 75px;
-    margin: 20px;
+/* game board */
+
+.game-board {
+
 }
 
+.boxes {
+    height: 100px;
+    width: 100px;
+    border: 1px, solid, #fff;
+}
+
+
+
+
+
+
+/* credit info */
 .credit {
     margin-top: 20px;
     font-size: 50%;
