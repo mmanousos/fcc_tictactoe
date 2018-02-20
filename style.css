@@ -8,9 +8,9 @@ body {
     margin: 20px;
 }
 
-/*.hidden {
+.hidden {
     display: none;
-}*/
+}
 
 /* main display area */
 .game-display {
@@ -32,11 +32,25 @@ body {
     font-weight: 600;
 }
 
+/* player display */
+.player-display {
+    margin-top: 25px;
+    background-color: #B53CB5;    
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.player-indicator {
+    padding: 0 5px;
+}
+
+
 /* game board */
 .game-board {
     padding: 20px;
     height: 275px;
     width: 300px;
+    margin-top: 0;
 }
 
 .boxes {
