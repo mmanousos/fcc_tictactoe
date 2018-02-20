@@ -44,6 +44,11 @@ body {
     padding: 0 5px;
 }
 
+.player {
+    width: 12px;
+    margin: 0 2px;
+}
+
 
 /* game board */
 .game-board {

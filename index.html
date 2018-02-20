@@ -18,7 +18,7 @@
     <body>
         <div class="jumbo container"> 
             <div class="row justify-content-center">
-                <div class="col-offset-4 game-display">
+                <div class="col-offset-4 game-display" id="game-select">
                     <div class="overlay"> 
                         <p>Choose Your Marker:</p>
 
@@ -32,13 +32,13 @@
             
             <div class="row justify-content-center">
                 <div class="player-display d-flex">
-                    <div class="player-indicator" id="x-turn">X's turn</div>
-                    <div class="player-indicator" id="o-turn">O's turn</div>
+                    <div class="player-indicator hidden" id="x-turn"><img class="player" src="cross-small.png" alt="small cross icon">'s turn</div>
+                    <div class="player-indicator hidden" id="o-turn"><img class="player" src="circle-outline-128.png" alt="small circle icon">'s turn</div>
                 </div>
             </div>        
         
             <div class="row justify-content-center">                
-                <div class="game-display game-board">   
+                <div class="game-display game-board hidden">   
                     <div class="d-flex flex-row justify-content-center">  
                         <div class="boxes right bottom" id="box1"><p></p>
                         </div>
