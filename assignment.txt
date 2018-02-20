@@ -19,7 +19,7 @@ markers will be black
 purple background
 
 https://www.iconsdb.com/black-icons/circle-outline-icon.html
-https://www.iconsdb.com/black-icons/x-mark-icon.html
+https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Sinal_de_vezes.svg/200px-Sinal_de_vezes.svg.png
 
 - want a way to indicate who's turn it is (x or o)
 - want to display winner or draw at end of game
@@ -37,6 +37,8 @@ font-family: 'Hind', sans-serif;
 
 If user selects X, computer plays as O. 
 Else, computer plays as X.
+
+Once player selects marker, game board displays.
 
 designate each box it's own value? 
 a1, a2, a3
