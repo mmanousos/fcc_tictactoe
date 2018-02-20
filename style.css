@@ -8,18 +8,24 @@ body {
     margin: 20px;
 }
 
+/*.hidden {
+    display: none;
+}*/
+
 /* main display area */
 .game-display {
     background-color: #8906E2;
     height: auto;
     border: 1px solid #000;
     margin-top: 20px;
+    padding: 0 20px;
 }
 
 /* player marker selection screen */
 .overlay {
     margin: 50px 0;
     text-align: center;
+    height: 150px;
 }
 
 .overlay p {
@@ -27,21 +33,29 @@ body {
 }
 
 /* game board */
-
 .game-board {
-
+    padding: 20px;
+    height: 275px;
+    width: 300px;
 }
 
 .boxes {
-    height: 100px;
-    width: 100px;
-    border: 1px, solid, #fff;
+    height: 75px;
+    width: 30%;
 }
 
+.right {
+    border-right: 1px solid #000;
+}
 
+.bottom {
+    border-bottom: 1px solid #000;
+}
 
-
-
+.player-icon {
+    width: 35px;
+    margin: 20px 20px 20px 20px;
+}
 
 /* credit info */
 .credit {
