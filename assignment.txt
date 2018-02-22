@@ -49,3 +49,16 @@ or 1-9
 
 What will be logic to have program block ?? 
 
+User always goes first. 
+User clicks on box (class '.boxes'; id = "box_" where _ = number from 1-9)
+    use "this" to display icon in the correct place 
+    
+If uneven number of boxes are filled, computer plays.     
+    
+Then computer's turn plays:
+    if user went in corner (box1, box3, box7, box9), computer should go in opposite corner
+    if user played center square (box5), computer can choose any corner
+    
+if user has any two in a row (e.g. 1) box1 + box2, 2) box2 + box3, 3) box2 + box5), computer should block (e.g. 1) box3, 2) box1, 3) box8).     
+
+From wikipedia: "Player O must always respond to a corner opening with a center mark, and to a center opening with a corner mark. An edge opening must be answered either with a center mark, a corner mark next to the X, or an edge mark opposite the X. Any other responses will allow X to force the win. Once the opening is completed, O's task is to follow the above list of priorities in order to force the draw, or else to gain a win if X makes a weak play."
