@@ -36,20 +36,25 @@ $(document).ready(function(){
     }); 
     
 
+    
   /* user play functionality to display icon */ 
     $('.boxes').on('click', function() {
         var boxID = this.id;
         userSquaresArr.push(boxID);
         console.log(userSquaresArr);
         if (userIcon === 'X') {
-            $(this).append(cross);
+            $(this)
+                .append(cross)
+                .addClass('taken');
             $('#x-turn').addClass('hidden');
             $('#o-turn').removeClass('hidden');
             boxCount++; 
             DeterminePlayer();
             return boxCount;
         } else {
-            $(this).append(circle);
+            $(this)
+                .append(circle)
+                .addClass('taken');
             $('#o-turn').addClass('hidden');
             $('#x-turn').removeClass('hidden');
             boxCount++; 
@@ -62,7 +67,43 @@ $(document).ready(function(){
     const ComputerPlay = function() {
             console.log('there are ' + boxCount + ' squares filled');
             //computer plays
-            
+            var positionCenter = userSquaresArr.indexOf('box5', 0);
+            var positionCorner1 = userSquaresArr.indexOf('box1', 0);
+            var positionCorner3 = userSquaresArr.indexOf('box3', 0);
+            var positionCorner7 = userSquaresArr.indexOf('box7', 0);
+            var positionCorner9 = userSquaresArr.indexOf('box9', 0);
+            if (positionCenter > -1) {
+                console.log("the user played the center square");
+                computerSquaresArr.push("box1");
+                if (computerIcon === 'X') {
+                    $('#box1')
+                        .append(cross)
+                        .addClass('taken');
+                    console.log("computer has played " + computerSquaresArr);
+                    boxCount++;
+                } else {
+                    $('#box1')
+                        .append(circle)
+                        .addClass('taken');
+                    console.log("computer has played " + computerSquaresArr);
+                    boxCount++;
+                }
+            } else if ((positionCorner1 > -1) || (positionCorner3 > -1) || (positionCorner7 > -1) || (positionCorner9 > -1)) {
+                 computerSquaresArr.push("box5");
+                 if (computerIcon === 'X') {
+                    $('#box5')
+                        .append(cross)
+                        .addClass('taken');
+                     console.log("computer has played " + computerSquaresArr);
+                    boxCount++;
+                } else {
+                    $('#box5')
+                        .append(circle)
+                        .addClass('taken');
+                    console.log("computer has played " + computerSquaresArr);
+                    boxCount++;
+                }      
+            }
         };
     
     const DeterminePlayer = function() {
