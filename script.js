@@ -47,7 +47,7 @@ $(document).ready(function(){
                 .append(cross)
                 .addClass('taken');
             $('#x-turn').addClass('hidden');
-            $('#o-turn').removeClass('hidden');
+            $('#o-turn').fadeIn(800);
             boxCount++; 
             DeterminePlayer();
             return boxCount;
@@ -56,7 +56,7 @@ $(document).ready(function(){
                 .append(circle)
                 .addClass('taken');
             $('#o-turn').addClass('hidden');
-            $('#x-turn').removeClass('hidden');
+            $('#x-turn').fadeIn(800);
             boxCount++; 
             DeterminePlayer();
             return boxCount; 
