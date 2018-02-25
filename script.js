@@ -3,7 +3,7 @@ $(document).ready(function(){
         computerIcon = '', 
         userSquaresArr = [],
         computerSquaresArr = [],
-        boxCount = 0, 
+        boxCount = 0 /*, 
         cross = $('<img></>')
             .attr('src', 'cross-small.png')
             .attr('alt', 'cross icon')
@@ -11,7 +11,7 @@ $(document).ready(function(){
         circle = $('<img></>')
             .attr('src', 'circle-outline-128.png')
             .attr('alt', 'circle icon')
-            .addClass('player-icon');
+            .addClass('player-icon')*/; 
 
     
   /* hide selection board & display game board */   
@@ -44,16 +44,18 @@ $(document).ready(function(){
         console.log(userSquaresArr);
         if (userIcon === 'X') {
             $(this)
-                .append(cross)
+                .children('.player-icon-x')
+                .fadeIn(500)
                 .addClass('taken');
-            $('#x-turn').addClass('hidden');
-            $('#o-turn').fadeIn(800);
+            $('#x-turn').fadeOut(200).addClass('hidden');
+            $('#o-turn').fadeIn(800).removeClass('hidden');
             boxCount++; 
             DeterminePlayer();
             return boxCount;
         } else {
             $(this)
-                .append(circle)
+                .children('.player-icon-o')
+                .fadeIn(500)
                 .addClass('taken');
             $('#o-turn').addClass('hidden');
             $('#x-turn').fadeIn(800);
@@ -77,31 +79,48 @@ $(document).ready(function(){
                 computerSquaresArr.push("box1");
                 if (computerIcon === 'X') {
                     $('#box1')
-                        .append(cross)
+                        .children('.player-icon-x')
+                        .delay(800)
+                        .fadeIn(500)
                         .addClass('taken');
                     console.log("computer has played " + computerSquaresArr);
                     boxCount++;
+                    $('#o-turn').delay(1300).fadeIn(800);
+                    $('#x-turn').addClass('hidden');
+                    
                 } else {
                     $('#box1')
-                        .append(circle)
+                        .children('.player-icon-o')
+                        .delay(800)
+                        .fadeIn(500)
                         .addClass('taken');
                     console.log("computer has played " + computerSquaresArr);
                     boxCount++;
+                    $('#o-turn').addClass('hidden');
+                    $('#x-turn').delay(1300).fadeIn(800);
                 }
             } else if ((positionCorner1 > -1) || (positionCorner3 > -1) || (positionCorner7 > -1) || (positionCorner9 > -1)) {
                  computerSquaresArr.push("box5");
                  if (computerIcon === 'X') {
                     $('#box5')
-                        .append(cross)
+                        .children('.player-icon-x')
+                        .delay(800)
+                        .fadeIn(500)
                         .addClass('taken');
                      console.log("computer has played " + computerSquaresArr);
-                    boxCount++;
+                     boxCount++;
+                     $('#o-turn').addClass('hidden');
+                     $('#x-turn').fadeIn(800);
                 } else {
                     $('#box5')
-                        .append(circle)
+                        .children('.player-icon-o')
+                        .delay(800)
+                        .fadeIn(500)
                         .addClass('taken');
                     console.log("computer has played " + computerSquaresArr);
                     boxCount++;
+                    $('#x-turn').addClass('hidden');
+                    $('#o-turn').fadeIn(800);    
                 }      
             }
         };
