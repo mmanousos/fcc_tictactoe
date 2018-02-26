@@ -62,3 +62,17 @@ Then computer's turn plays:
 if user has any two in a row (e.g. 1) box1 + box2, 2) box2 + box3, 3) box2 + box5), computer should block (e.g. 1) box3, 2) box1, 3) box8).     
 
 From wikipedia: "Player O must always respond to a corner opening with a center mark, and to a center opening with a corner mark. An edge opening must be answered either with a center mark, a corner mark next to the X, or an edge mark opposite the X. Any other responses will allow X to force the win. Once the opening is completed, O's task is to follow the above list of priorities in order to force the draw, or else to gain a win if X makes a weak play."
+
+first play only:
+if user plays center, 
+    computer should play corner (can figure out a random corner? for now just use box1)
+if user plays corner, 
+    computer should play center
+if user plays edge, 
+    computer should play center, corner next to mark or edge opposite
+    
+    
+
+Player turn indicator not working as I hoped. 
+- I want it to switch immediately after the computer plays and immediately after the user plays.
+- Marking it out until the game logic has been coded. Then I will try again. 
