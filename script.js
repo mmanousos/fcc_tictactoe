@@ -5,7 +5,16 @@ $(document).ready(function(){
         computerSquaresArr = [],
         boxID = '',
         boxCount = 0, 
-        nextEdge = '';
+        nextEdge = '',
+        winningPatterns = [["1", "2", "3"], 
+                           ["4", "5", "6"], 
+                           ["7", "8", "9"], 
+                           ['1', '4', '7'], 
+                           ['2', '5', '8'], 
+                           ['3', '6', '9'], 
+                           ['1', '5', '9'], 
+                           ['3', '5', '7']];
+    
     
   /* hide selection board & display game board */   
     const HideSelect = function() {
@@ -142,7 +151,42 @@ $(document).ready(function(){
         }
     };
     
-    const ComputerPlay = function() {
+    const BlockLogic = function () {
+             // check if userSquaresArr contains the same values as any of the arrays in winningPatterns
+    // duplicate the winningPattern array currently checking. if userSquaresArr first value matches any value in that array, remove that value from the array, and check second value in userSquaresArr against remaining values in same array in winningPattern. 
+    // if an additional value matches, remove that value.
+    //return the remaining value for the computer to play. 
+        var i = 0;
+
+        for (var j = 0; j < winningPatterns.length; j++ ) { 
+        if (i === userSquaresArr.length) { 
+          i = 0; 
+        }
+        var checkWP = winningPatterns[j];
+          console.log(checkWP);
+          var l = 0;
+        for (var k = 0; k < winningPatterns[l].length; k++ ) {
+          var userValue = userSquaresArr[i],
+              valPresent = checkWP.indexOf(userValue, 0);
+            console.log(userValue + " is current UserValue")
+            if (valPresent > -1) {
+              checkWP.splice(valPresent, 1);
+                console.log("the userValue is present in the current winningPattern at position " + valPresent)
+              i++; 
+            } else if (valPresent == -1) { 
+              i++; 
+            } 
+          };
+        };
+        if (checkWP.length < 2) {
+            var compNextMove = checkWP[0];
+            return compNextMove;
+        }
+        return compNextMove;
+    }
+        
+    
+    const ComputerPlay = function(compNextMove) {
         console.log("user played = " + boxID + ' (from ComputerPlay function)');
         console.log('there are ' + boxCount + ' squares filled (from ComputerPlay function)');
             //computer plays
@@ -160,7 +204,30 @@ $(document).ready(function(){
                 PlayOppositeEdge();
             //    } 
             }         
-        }    
+        } else if (boxCount >= 3) {
+            BlockLogic();
+            
+            if (computerIcon === 'X') {
+            $(compNextMove)
+                .children('.player-icon-x')
+                .delay(800)
+                .fadeIn(500)
+                .addClass('taken');
+            computerSquaresArr.push(compNextMove);
+            console.log("computer has played box " + compNextMove);
+            boxCount++;                     
+        } else {
+            $(compNextMove)
+                .children('.player-icon-o')
+                .delay(800)
+                .fadeIn(500)
+                .addClass('taken');
+            computerSquaresArr.push(compNextMove);
+            console.log("computer has played box " + compNextMove);
+            boxCount++;    
+        } 
+            
+        }   
     };
         
         

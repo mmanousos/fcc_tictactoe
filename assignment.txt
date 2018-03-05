@@ -71,6 +71,53 @@ if user plays corner,
 if user plays edge, 
     computer should play center, corner next to mark or edge opposite
     
+    * need to figure out how to get it to play random corner after center box is played as first move. 
+    * need to figure out how to get it to play either corner next to edge (PlayAdjCorner)
+    * need to figure out how to randomize if it plays center, opposite edge or corner next to edge after edge move.
+    * need to figure out how it will know where to block. 
+        have AI check "userSquaresArr" for specific patterns
+        
+    two in a row = 
+    1, 2
+    2, 3
+    4, 5
+    5, 6
+    7, 8
+    8, 9
+    1, 4
+    4, 7
+    2, 5
+    5, 8
+    3, 6
+    6, 9
+    1, 5
+    3, 5
+    7, 5
+    9, 5
+     if userSquaresArr contains any of these combinations, computer needs to block them in the remaining space.
+     
+     
+     winning patterns: 
+    1, 2, 3
+    4, 5, 6
+    7, 8, 9
+    1, 4, 7
+    2, 5, 8
+    3, 6, 9
+    1, 5, 9
+    3, 5, 7
+    if userSquaresArr contains any two of these three and the additional value is not already in computerSquaresArr, computer needs to play that one next. 
+        * implement this check on every move starting at boxCount === 3. 
+        
+        cycle through winningPatterns array: 
+            if first element of userSquaresArr is present, 
+                move on to second element of userSquaresArr.
+                if second element is also present, 
+                    return third element of array as move for computer to play. 
+                    
+                    
+        
+    
     
 
 Player turn indicator not working as I hoped. 
