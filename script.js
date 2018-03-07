@@ -5,7 +5,6 @@ $(document).ready(function(){
         computerSquaresArr = [],
         boxID = '',
         boxCount = 0, 
-        nextEdge = '',
         winningPatterns = [["1", "2", "3"], 
                            ["4", "5", "6"], 
                            ["7", "8", "9"], 
@@ -141,32 +140,38 @@ $(document).ready(function(){
     };
     
     const PlayOppositeEdge = function() {
+        var nextEdge = '',
+            nextEdgePlay = '';
+        
         if (boxID === '2') {
-            nextEdge = '#8';
+            nextEdge = '8';
+            nextEdgePlay = '#8';
         } else if (boxID === '4') {
-            nextEdge = '#6';
+            nextEdge = '6';
+            nextEdgePlay = '#6';
         } else if (boxID === '6') {
-            nextEdge = '#4';
+            nextEdge = '4';
+            nextEdgePlay = '#4';
         } else if (boxID === '8') {
-            nextEdge = '#2'; 
+            nextEdge = '2';
+            nextEdgePlay = '#2';
         } 
+        computerSquaresArr.push(nextEdge);
         if (computerIcon === 'X') {
-            $(nextEdge)
+            $(nextEdgePlay)
                 .children('.player-icon-x')
                 .delay(800)
                 .fadeIn(500)
                 .addClass('taken');
-            computerSquaresArr.push(nextEdge);
-            console.log("computer has played box " + nextEdge);
+            console.log("computer has played box " + nextEdgePlay);
             boxCount++;                     
         } else {
-            $(nextEdge)
+            $(nextEdgePlay)
                 .children('.player-icon-o')
                 .delay(800)
                 .fadeIn(500)
                 .addClass('taken');
-            computerSquaresArr.push(nextEdge);
-            console.log("computer has played box " + nextEdge);
+            console.log("computer has played box " + nextEdgePlay);
             boxCount++;    
         }
     };
