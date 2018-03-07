@@ -140,22 +140,23 @@ $(document).ready(function(){
     };
     
     const PlayOppositeEdge = function() {
-        var nextEdge = '',
-            nextEdgePlay = '';
+        var corner = '',
+            cornerPlay = '',
+            rand = Math.random();
         
-        if (boxID === '2') {
-            nextEdge = '8';
-            nextEdgePlay = '#8';
-        } else if (boxID === '4') {
-            nextEdge = '6';
-            nextEdgePlay = '#6';
-        } else if (boxID === '6') {
-            nextEdge = '4';
-            nextEdgePlay = '#4';
-        } else if (boxID === '8') {
-            nextEdge = '2';
-            nextEdgePlay = '#2';
-        } 
+        if (rand < .249) {
+            corner = '1';
+            cornerPlay = '#1';
+        } else if (rand < .499) {
+            corner = '3';
+            cornerPlay = '#3';
+        } else if (rand < .749) {
+            corner = '7';
+            cornerPlay = '#7';
+        } else {
+            corner = '9';
+            cornerPlay = '#9';
+        }
         computerSquaresArr.push(nextEdge);
         if (computerIcon === 'X') {
             $(nextEdgePlay)
@@ -175,6 +176,66 @@ $(document).ready(function(){
             boxCount++;    
         }
     };
+    
+    const PlayAdjCorner = function () {
+        var adjCorner = '',
+            adjCornerPlay = '',
+            rand = Math.random();
+        
+        if (boxID === '2') {
+            if (rand < .499) {
+                adjCorner = '1';
+                adjCornerPlay = '#1';
+            } else {
+                adjCorner = '3';
+                adjCornerPlay = '#3';
+            }
+        } else if (boxID === '4') {
+            if (rand < .499) {
+                adjCorner = '1';
+                adjCornerPlay = '#1';
+            } else {
+                adjCorner = '7';
+                adjCornerPlay = '#7';
+            }
+        } else if (boxID === '6') {
+            if (rand < .499) {
+                adjCorner = '3';
+                adjCornerPlay = '#3';
+            } else {
+                adjCorner = '7';
+                adjCornerPlay = '#7';
+            }
+        } else if (boxID === '8') {
+            if (rand < .499) {
+                adjCorner = '7';
+                adjCornerPlay = '#7';
+            } else {
+                adjCorner = '9';
+                adjCornerPlay = '#9';
+            }
+        }
+        
+        computerSquaresArr.push(adjCorner);
+        if (computerIcon === 'X') {
+            $(adjCornerPlay)
+                .children('.player-icon-x')
+                .delay(800)
+                .fadeIn(500)
+                .addClass('taken');
+            console.log("computer has played box " + adjCornerPlay);
+            boxCount++;                     
+        } else {
+            $(adjCornerPlay)
+                .children('.player-icon-o')
+                .delay(800)
+                .fadeIn(500)
+                .addClass('taken');
+            console.log("computer has played box " + adjCornerPlay);
+            boxCount++;    
+        }
+    };
+    
     
     const BlockLogic = function () {
              // check if userSquaresArr contains the same values as any of the arrays in winningPatterns
@@ -228,7 +289,8 @@ $(document).ready(function(){
             //        PlayCenter();
             //    } else {  // otherwise play opposite edge
                 //UsersPlay();    
-                PlayOppositeEdge();
+//                PlayOppositeEdge();
+                PlayAdjCorner();
             //    } 
             }         
         } else if (boxCount >= 3) {

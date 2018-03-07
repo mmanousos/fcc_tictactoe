@@ -75,7 +75,17 @@ if user plays edge,
         - Use Math.random() 
             - if < .249, play 1; if < .499, play 3; if < .749, play 7; else, play 9. 
     * need to figure out how to get it to play either corner next to edge (PlayAdjCorner)
+        - Use Math.random()
+            - if < .499, play lower corner; else, play higher corner
+            ( if user plays 2 & random < .499, play 1; else play 3
+              if user plays 4 & random < .499, play 1; else play 7
+              if user plays 6 & random < .499, play 3; else play 7
+              if user plays 8 & random < .499, play 7; else play 9 )
+              
     * need to figure out how to randomize if it plays center, opposite edge or corner next to edge after edge move.
+        - Use Math.random()
+            - if < .333, play center; else if < .666, play opposite edge; else, play Adjcorner.
+            
     * need to figure out how it will know where to block. 
         have AI check "userSquaresArr" for specific patterns
         
