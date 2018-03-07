@@ -78,22 +78,42 @@ $(document).ready(function(){
     
     /* respond to center play */ 
     const PlayCorner = function() {
-        computerSquaresArr.push("1");
+        var corner = '',
+            cornerPlay = '',
+            rand = Math.random();
+        
+        if (rand < .249) {
+            corner = '1';
+            cornerPlay = '#1';
+        } else if (rand < .499) {
+            corner = '3';
+            cornerPlay = '#3';
+        } else if (rand < .749) {
+            corner = '7';
+            cornerPlay = '#7';
+        } else {
+            corner = '9';
+            cornerPlay = '#9';
+        }
+
+        computerSquaresArr.push(corner);
         if (computerIcon === 'X') {
-            $('#1')
+            $(cornerPlay)
                 .children('.player-icon-x')
                 .delay(800)
                 .fadeIn(500)
                 .addClass('taken');
-            console.log("computer has played box #1");
+            console.log("computer has played box " + cornerPlay);
+            console.log(computerSquaresArr);
             boxCount++;
         } else {
-            $('#1')
+            $(cornerPlay)
                 .children('.player-icon-o')
                 .delay(800)
                 .fadeIn(500)
                 .addClass('taken');
-            console.log("computer has played box #1");
+            console.log("computer has played box " + cornerPlay);
+            console.log(computerSquaresArr);
             boxCount++;                    
         }   
     };
@@ -159,7 +179,7 @@ $(document).ready(function(){
         var i = 0;
 
         for (var j = 0; j < winningPatterns.length; j++ ) { 
-        if (i === userSquaresArr.length) { 
+        if (i >= userSquaresArr.length) { 
           i = 0; 
         }
         var checkWP = winningPatterns[j];
@@ -171,18 +191,20 @@ $(document).ready(function(){
             console.log(userValue + " is current UserValue")
             if (valPresent > -1) {
               checkWP.splice(valPresent, 1);
+              var checkWPleng = checkWP.length;    
                 console.log("the userValue is present in the current winningPattern at position " + valPresent)
               i++; 
+                console.log(checkWP.length);
+                if (checkWPleng < 2) {
+                    var compNextMove = checkWP[0];
+                    console.log("computer's next move should be " + compNextMove);
+                    return compNextMove;
+                }
             } else if (valPresent == -1) { 
               i++; 
             } 
           };
         };
-        if (checkWP.length < 2) {
-            var compNextMove = checkWP[0];
-            return compNextMove;
-        }
-        return compNextMove;
     }
         
     
@@ -206,6 +228,8 @@ $(document).ready(function(){
             }         
         } else if (boxCount >= 3) {
             BlockLogic();
+          
+            console.log(compNextMove);
             
             if (computerIcon === 'X') {
             $(compNextMove)

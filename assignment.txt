@@ -72,6 +72,8 @@ if user plays edge,
     computer should play center, corner next to mark or edge opposite
     
     * need to figure out how to get it to play random corner after center box is played as first move. 
+        - Use Math.random() 
+            - if < .249, play 1; if < .499, play 3; if < .749, play 7; else, play 9. 
     * need to figure out how to get it to play either corner next to edge (PlayAdjCorner)
     * need to figure out how to randomize if it plays center, opposite edge or corner next to edge after edge move.
     * need to figure out how it will know where to block. 
