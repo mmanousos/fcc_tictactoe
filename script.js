@@ -139,23 +139,23 @@ $(document).ready(function(){
         }
     };
     
+    /* respond to edge with opposite edge*/
     const PlayOppositeEdge = function() {
-        var corner = '',
-            cornerPlay = '',
-            rand = Math.random();
+        var nextEdge = '',
+            nextEdgePlay = '';
         
-        if (rand < .249) {
-            corner = '1';
-            cornerPlay = '#1';
-        } else if (rand < .499) {
-            corner = '3';
-            cornerPlay = '#3';
-        } else if (rand < .749) {
-            corner = '7';
-            cornerPlay = '#7';
-        } else {
-            corner = '9';
-            cornerPlay = '#9';
+        if (boxID === '2') {
+            nextEdge = '8';
+            nextEdgePlay = '#8';
+        } else if (boxID === '4') {
+            nextEdge = '6';
+            nextEdgePlay = '#6';
+        } else if (boxID === '6') {
+            nextEdge = '4';
+            nextEdgePlay = '#4';
+        } else if (boxID === '8') {
+            nextEdge = '2';
+            nextEdgePlay = '#2';
         }
         computerSquaresArr.push(nextEdge);
         if (computerIcon === 'X') {
@@ -177,6 +177,7 @@ $(document).ready(function(){
         }
     };
     
+    /* respond to edge with adjacent corner */
     const PlayAdjCorner = function () {
         var adjCorner = '',
             adjCornerPlay = '',
@@ -284,14 +285,14 @@ $(document).ready(function(){
             } else if ((boxID === '1') || (boxID === '3') || (boxID === '7') || (boxID === '9')) {
                 PlayCenter(); 
             } else if ((boxID === '2') || (boxID === '4') || (boxID === '6') || (boxID === '8')) {
-                // if center square isn't taken, computer plays center
-             //   if (!$('#5').hasClass('taken')) {
-            //        PlayCenter();
-            //    } else {  // otherwise play opposite edge
-                //UsersPlay();    
-//                PlayOppositeEdge();
-                PlayAdjCorner();
-            //    } 
+                var rand = Math.random();
+                if (rand < .333) {
+                    PlayCenter();
+                } else if (rand < .666) {
+                    PlayOppositeEdge();
+                } else {
+                    PlayAdjCorner();
+                }        
             }         
         } else if (boxCount >= 3) {
             BlockLogic();
@@ -299,31 +300,26 @@ $(document).ready(function(){
             console.log(compNextMove);
             
             if (computerIcon === 'X') {
-            $(compNextMove)
-                .children('.player-icon-x')
-                .delay(800)
-                .fadeIn(500)
-                .addClass('taken');
-            computerSquaresArr.push(compNextMove);
-            console.log("computer has played box " + compNextMove);
-            boxCount++;                     
-        } else {
-            $(compNextMove)
-                .children('.player-icon-o')
-                .delay(800)
-                .fadeIn(500)
-                .addClass('taken');
-            computerSquaresArr.push(compNextMove);
-            console.log("computer has played box " + compNextMove);
-            boxCount++;    
-        } 
-            
+                $(compNextMove)
+                    .children('.player-icon-x')
+                    .delay(800)
+                    .fadeIn(500)
+                    .addClass('taken');
+                computerSquaresArr.push(compNextMove);
+                console.log("computer has played box " + compNextMove);
+                boxCount++;                     
+            } else {
+                $(compNextMove)
+                    .children('.player-icon-o')
+                    .delay(800)
+                    .fadeIn(500)
+                    .addClass('taken');
+                computerSquaresArr.push(compNextMove);
+                console.log("computer has played box " + compNextMove);
+                boxCount++;    
+            }     
         }   
     };
-        
-        
-    
-    
-  
+
     
 });
