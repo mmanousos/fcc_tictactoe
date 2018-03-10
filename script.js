@@ -253,6 +253,7 @@ $(document).ready(function(){
                     if (checkWPleng < 2) {
                         compNextMove = checkWP[0];
                         console.log("computer's next move should be " + compNextMove);
+                        return compNextMove;
                     }
                 } else if (valPresent == -1) { 
                   i++; 
@@ -282,7 +283,7 @@ $(document).ready(function(){
                 }        
             }         
         } else if (boxCount >= 3) {
-            BlockLogic();
+            compNextMove = BlockLogic();
           
             console.log("Next computer's move: " + compNextMove);
             if (computerIcon === 'X') {
