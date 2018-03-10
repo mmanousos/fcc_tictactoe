@@ -119,18 +119,16 @@ $(document).ready(function(){
                 .children('.player-icon-x')
                 .delay(800)
                 .fadeIn(500)
-                .addClass('taken');
-            console.log("computer has played box #5");
-            boxCount++;                     
+                .addClass('taken');                    
         } else {
             $('#5')
                 .children('.player-icon-o')
                 .delay(800)
                 .fadeIn(500)
-                .addClass('taken');
-            console.log("computer has played box #5");
-            boxCount++;    
+                .addClass('taken');   
         }
+        console.log("computer has played box #5");
+        boxCount++; 
     };
     
     /* respond to edge with opposite edge*/
