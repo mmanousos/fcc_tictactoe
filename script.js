@@ -99,19 +99,16 @@ $(document).ready(function(){
                 .delay(800)
                 .fadeIn(500)
                 .addClass('taken');
-            console.log("computer has played box " + cornerPlay);
-            console.log(computerSquaresArr);
-            boxCount++;
         } else {
             $(cornerPlay)
                 .children('.player-icon-o')
                 .delay(800)
                 .fadeIn(500)
-                .addClass('taken');
-            console.log("computer has played box " + cornerPlay);
-            console.log(computerSquaresArr);
-            boxCount++;                    
+                .addClass('taken');                   
         }   
+        console.log("computer has played box " + cornerPlay);
+        console.log(computerSquaresArr);
+        boxCount++;
     };
     
     /* respond to corner play*/ 
