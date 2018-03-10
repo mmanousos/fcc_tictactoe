@@ -48,7 +48,7 @@ $(document).ready(function(){
         $('.boxes').on('click', function() {
             boxID = this.id;
             userSquaresArr.push(boxID);
-            console.log(userSquaresArr);
+            console.log("user's plays: " + userSquaresArr);
             if (userIcon === 'X') {
                 $(this)
                     .children('.player-icon-x')
@@ -107,7 +107,7 @@ $(document).ready(function(){
                 .addClass('taken');                   
         }   
         console.log("computer has played box " + cornerPlay);
-        console.log(computerSquaresArr);
+        console.log("computer's plays: " + computerSquaresArr);
         boxCount++;
     };
     
@@ -234,31 +234,31 @@ $(document).ready(function(){
         var i = 0;
 
         for (var j = 0; j < winningPatterns.length; j++ ) { 
-        if (i >= userSquaresArr.length) { 
-          i = 0; 
-        }
-        var checkWP = winningPatterns[j];
-          console.log(checkWP);
-          var l = 0;
-        for (var k = 0; k < winningPatterns[l].length; k++ ) {
-          var userValue = userSquaresArr[i],
-              valPresent = checkWP.indexOf(userValue, 0);
-            console.log(userValue + " is current UserValue")
-            if (valPresent > -1) {
-              checkWP.splice(valPresent, 1);
-              var checkWPleng = checkWP.length;    
-                console.log("the userValue is present in the current winningPattern at position " + valPresent)
-              i++; 
-                console.log(checkWP.length);
-                if (checkWPleng < 2) {
-                    var compNextMove = checkWP[0];
-                    console.log("computer's next move should be " + compNextMove);
-                    return compNextMove;
-                }
-            } else if (valPresent == -1) { 
-              i++; 
-            } 
-          };
+            if (i >= userSquaresArr.length) { 
+              i = 0; 
+            }
+            var checkWP = winningPatterns[j];
+            console.log("WinningPattern " + j + ": " + checkWP);
+            var l = 0;
+            for (var k = 0; k < winningPatterns[l].length; k++ ) {
+                var userValue = userSquaresArr[i],
+                  valPresent = checkWP.indexOf(userValue, 0);
+                console.log(userValue + " is current UserValue")
+                if (valPresent > -1) {
+                    checkWP.splice(valPresent, 1);
+                    var checkWPleng = checkWP.length;    
+                    console.log("the userValue is present in the current winningPattern at position " + valPresent)
+                    i++; 
+                    console.log("length of checkWP:" + checkWP.length);
+                    if (checkWPleng < 2) {
+                        var compNextMove = checkWP[0];
+                        console.log("computer's next move should be " + compNextMove);
+                        return compNextMove;
+                    }
+                } else if (valPresent == -1) { 
+                  i++; 
+                } 
+            };
         };
     }
         
@@ -285,7 +285,7 @@ $(document).ready(function(){
         } else if (boxCount >= 3) {
             BlockLogic();
           
-            console.log(compNextMove);
+            console.log("Next computer's move: " + compNextMove);
             if (computerIcon === 'X') {
                 $(compNextMove)
                     .children('.player-icon-x')
