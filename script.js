@@ -251,9 +251,8 @@ $(document).ready(function(){
                     i++; 
                     console.log("length of checkWP:" + checkWP.length);
                     if (checkWPleng < 2) {
-                        var compNextMove = checkWP[0];
+                        compNextMove = checkWP[0];
                         console.log("computer's next move should be " + compNextMove);
-                        return compNextMove;
                     }
                 } else if (valPresent == -1) { 
                   i++; 
@@ -263,7 +262,7 @@ $(document).ready(function(){
     }
         
     
-    const ComputerPlay = function(compNextMove) {
+    const ComputerPlay = function() {
         console.log("user played = " + boxID + ' (from ComputerPlay function)');
         console.log('there are ' + boxCount + ' squares filled (from ComputerPlay function)');
             //computer plays
@@ -287,13 +286,13 @@ $(document).ready(function(){
           
             console.log("Next computer's move: " + compNextMove);
             if (computerIcon === 'X') {
-                $(compNextMove)
+                $('#'+compNextMove)
                     .children('.player-icon-x')
                     .delay(800)
                     .fadeIn(500)
                     .addClass('taken');                                    
             } else {
-                $(compNextMove)
+                $('#'+compNextMove)
                     .children('.player-icon-o')
                     .delay(800)
                     .fadeIn(500)
