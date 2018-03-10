@@ -54,20 +54,17 @@ $(document).ready(function(){
                     .children('.player-icon-x')
                     .fadeIn(500)
                     .addClass('taken');
-                boxCount++; 
-                console.log('boxCount is = ' + boxCount);
-                console.log("user played " + boxID + ' (from UserPlay function)');
-                DeterminePlayer();
+                
             } else {
                 $(this)
                     .children('.player-icon-o')
                     .fadeIn(500)
                     .addClass('taken');            
-                boxCount++; 
-                console.log('boxCount is = ' + boxCount);
-                console.log("user played " + boxID);
-                DeterminePlayer();
             }
+            boxCount++; 
+                console.log('boxCount is = ' + boxCount);
+                console.log("user played " + boxID + ' (from UserPlay function)');
+                DeterminePlayer();
         });
     };
     
