@@ -286,26 +286,22 @@ $(document).ready(function(){
             BlockLogic();
           
             console.log(compNextMove);
-            
             if (computerIcon === 'X') {
                 $(compNextMove)
                     .children('.player-icon-x')
                     .delay(800)
                     .fadeIn(500)
-                    .addClass('taken');
-                computerSquaresArr.push(compNextMove);
-                console.log("computer has played box " + compNextMove);
-                boxCount++;                     
+                    .addClass('taken');                                    
             } else {
                 $(compNextMove)
                     .children('.player-icon-o')
                     .delay(800)
                     .fadeIn(500)
-                    .addClass('taken');
-                computerSquaresArr.push(compNextMove);
-                console.log("computer has played box " + compNextMove);
-                boxCount++;    
-            }     
+                    .addClass('taken');  
+            }   
+            computerSquaresArr.push(compNextMove);
+            console.log("computer has played box " + compNextMove);
+            boxCount++;  
         }   
     };
 
