@@ -48,26 +48,23 @@ $(document).ready(function(){
         $('.boxes').on('click', function() {
             boxID = this.id;
             userSquaresArr.push(boxID);
-            console.log(userSquaresArr);
+            console.log("user's plays: " + userSquaresArr);
             if (userIcon === 'X') {
                 $(this)
                     .children('.player-icon-x')
                     .fadeIn(500)
                     .addClass('taken');
-                boxCount++; 
-                console.log('boxCount is = ' + boxCount);
-                console.log("user played " + boxID + ' (from UserPlay function)');
-                DeterminePlayer();
+                
             } else {
                 $(this)
                     .children('.player-icon-o')
                     .fadeIn(500)
                     .addClass('taken');            
-                boxCount++; 
-                console.log('boxCount is = ' + boxCount);
-                console.log("user played " + boxID);
-                DeterminePlayer();
             }
+            boxCount++; 
+                console.log('boxCount is = ' + boxCount);
+                console.log("user played " + boxID + ' (from UserPlay function)');
+                DeterminePlayer();
         });
     };
     
@@ -102,19 +99,16 @@ $(document).ready(function(){
                 .delay(800)
                 .fadeIn(500)
                 .addClass('taken');
-            console.log("computer has played box " + cornerPlay);
-            console.log(computerSquaresArr);
-            boxCount++;
         } else {
             $(cornerPlay)
                 .children('.player-icon-o')
                 .delay(800)
                 .fadeIn(500)
-                .addClass('taken');
-            console.log("computer has played box " + cornerPlay);
-            console.log(computerSquaresArr);
-            boxCount++;                    
+                .addClass('taken');                   
         }   
+        console.log("computer has played box " + cornerPlay);
+        console.log("computer's plays: " + computerSquaresArr);
+        boxCount++;
     };
     
     /* respond to corner play*/ 
@@ -125,18 +119,16 @@ $(document).ready(function(){
                 .children('.player-icon-x')
                 .delay(800)
                 .fadeIn(500)
-                .addClass('taken');
-            console.log("computer has played box #5");
-            boxCount++;                     
+                .addClass('taken');                    
         } else {
             $('#5')
                 .children('.player-icon-o')
                 .delay(800)
                 .fadeIn(500)
-                .addClass('taken');
-            console.log("computer has played box #5");
-            boxCount++;    
+                .addClass('taken');   
         }
+        console.log("computer has played box #5");
+        boxCount++; 
     };
     
     /* respond to edge with opposite edge*/
@@ -163,18 +155,16 @@ $(document).ready(function(){
                 .children('.player-icon-x')
                 .delay(800)
                 .fadeIn(500)
-                .addClass('taken');
-            console.log("computer has played box " + nextEdgePlay);
-            boxCount++;                     
+                .addClass('taken');                   
         } else {
             $(nextEdgePlay)
                 .children('.player-icon-o')
                 .delay(800)
                 .fadeIn(500)
-                .addClass('taken');
-            console.log("computer has played box " + nextEdgePlay);
-            boxCount++;    
+                .addClass('taken');   
         }
+        console.log("computer has played box " + nextEdgePlay);
+        boxCount++; 
     };
     
     /* respond to edge with adjacent corner */
@@ -223,18 +213,16 @@ $(document).ready(function(){
                 .children('.player-icon-x')
                 .delay(800)
                 .fadeIn(500)
-                .addClass('taken');
-            console.log("computer has played box " + adjCornerPlay);
-            boxCount++;                     
+                .addClass('taken');                    
         } else {
             $(adjCornerPlay)
                 .children('.player-icon-o')
                 .delay(800)
                 .fadeIn(500)
-                .addClass('taken');
-            console.log("computer has played box " + adjCornerPlay);
-            boxCount++;    
+                .addClass('taken');   
         }
+        console.log("computer has played box " + adjCornerPlay);
+        boxCount++; 
     };
     
     
@@ -246,36 +234,36 @@ $(document).ready(function(){
         var i = 0;
 
         for (var j = 0; j < winningPatterns.length; j++ ) { 
-        if (i >= userSquaresArr.length) { 
-          i = 0; 
-        }
-        var checkWP = winningPatterns[j];
-          console.log(checkWP);
-          var l = 0;
-        for (var k = 0; k < winningPatterns[l].length; k++ ) {
-          var userValue = userSquaresArr[i],
-              valPresent = checkWP.indexOf(userValue, 0);
-            console.log(userValue + " is current UserValue")
-            if (valPresent > -1) {
-              checkWP.splice(valPresent, 1);
-              var checkWPleng = checkWP.length;    
-                console.log("the userValue is present in the current winningPattern at position " + valPresent)
-              i++; 
-                console.log(checkWP.length);
-                if (checkWPleng < 2) {
-                    var compNextMove = checkWP[0];
-                    console.log("computer's next move should be " + compNextMove);
-                    return compNextMove;
-                }
-            } else if (valPresent == -1) { 
-              i++; 
-            } 
-          };
+            if (i >= userSquaresArr.length) { 
+              i = 0; 
+            }
+            var checkWP = winningPatterns[j];
+            console.log("WinningPattern " + j + ": " + checkWP);
+            var l = 0;
+            for (var k = 0; k < winningPatterns[l].length; k++ ) {
+                var userValue = userSquaresArr[i],
+                  valPresent = checkWP.indexOf(userValue, 0);
+                console.log(userValue + " is current UserValue")
+                if (valPresent > -1) {
+                    checkWP.splice(valPresent, 1);
+                    var checkWPleng = checkWP.length;    
+                    console.log("the userValue is present in the current winningPattern at position " + valPresent)
+                    i++; 
+                    console.log("length of checkWP:" + checkWP.length);
+                    if (checkWPleng < 2) {
+                        compNextMove = checkWP[0];
+                        console.log("computer's next move should be " + compNextMove);
+                        return compNextMove;
+                    }
+                } else if (valPresent == -1) { 
+                  i++; 
+                } 
+            };
         };
     }
         
     
-    const ComputerPlay = function(compNextMove) {
+    const ComputerPlay = function() {
         console.log("user played = " + boxID + ' (from ComputerPlay function)');
         console.log('there are ' + boxCount + ' squares filled (from ComputerPlay function)');
             //computer plays
@@ -295,29 +283,25 @@ $(document).ready(function(){
                 }        
             }         
         } else if (boxCount >= 3) {
-            BlockLogic();
+            compNextMove = BlockLogic();
           
-            console.log(compNextMove);
-            
+            console.log("Next computer's move: " + compNextMove);
             if (computerIcon === 'X') {
-                $(compNextMove)
+                $('#'+compNextMove)
                     .children('.player-icon-x')
                     .delay(800)
                     .fadeIn(500)
-                    .addClass('taken');
-                computerSquaresArr.push(compNextMove);
-                console.log("computer has played box " + compNextMove);
-                boxCount++;                     
+                    .addClass('taken');                                    
             } else {
-                $(compNextMove)
+                $('#'+compNextMove)
                     .children('.player-icon-o')
                     .delay(800)
                     .fadeIn(500)
-                    .addClass('taken');
-                computerSquaresArr.push(compNextMove);
-                console.log("computer has played box " + compNextMove);
-                boxCount++;    
-            }     
+                    .addClass('taken');  
+            }   
+            computerSquaresArr.push(compNextMove);
+            console.log("computer has played box " + compNextMove);
+            boxCount++;  
         }   
     };
 
