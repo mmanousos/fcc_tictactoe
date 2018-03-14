@@ -61,7 +61,10 @@ Then computer's turn plays:
     
 if user has any two in a row (e.g. 1) box1 + box2, 2) box2 + box3, 3) box2 + box5), computer should block (e.g. 1) box3, 2) box1, 3) box8).     
 
-From wikipedia: "Player O must always respond to a corner opening with a center mark, and to a center opening with a corner mark. An edge opening must be answered either with a center mark, a corner mark next to the X, or an edge mark opposite the X. Any other responses will allow X to force the win. Once the opening is completed, O's task is to follow the above list of priorities in order to force the draw, or else to gain a win if X makes a weak play."
+From wikipedia: "Player O must always respond to a corner opening with a center mark, and to a center opening with a corner mark. 
+An edge opening must be answered either with a center mark, a corner mark next to the X, or an edge mark opposite the X. 
+Any other responses will allow X to force the win. Once the opening is completed, O's task is to follow the above list of priorities 
+in order to force the draw, or else to gain a win if X makes a weak play."
 
 first play only:
 if user plays center, 
@@ -126,6 +129,16 @@ if user plays edge,
                 move on to second element of userSquaresArr.
                 if second element is also present, 
                     return third element of array as move for computer to play. 
+                    if this element is already taken (has class 'taken'), where should it play? 
+                        if user plays an edge, should play an adjacent corner
+                        if user plays a corner, should play an adjacent edge
+                        
+            *At 4+ moves (and all even number of moves after) [boxCount === 4 or ((boxCount % 2 === 0) && (boxCount > 3))], 
+            computer should check to see if it can win (if any of its array matches the winning patterns - maybe can reuse part of 
+            BlockLogic function to run this check)*
+            
+            *make sure computer's moves are pushed to computerSquaresArr in all functions*
+                    
                     
                     
         
