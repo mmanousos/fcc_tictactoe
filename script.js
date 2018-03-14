@@ -106,7 +106,6 @@ $(document).ready(function(){
                 .fadeIn(500)
                 .addClass('taken');                   
         }   
-        console.log("computer has played box " + cornerPlay);
         console.log("computer's plays: " + computerSquaresArr);
         boxCount++;
     };
@@ -166,6 +165,63 @@ $(document).ready(function(){
         console.log("computer has played box " + nextEdgePlay);
         boxCount++; 
     };
+    
+    /* respond to corner with adjacent edge*/
+    const PlayEdgeToCorner = function() {
+        var edgeToCorner = '',
+            nextEdgeToCorner = '';
+        
+        if (boxID === '1') {
+            if ($('#2').hasClass('taken')) {
+                edgeToCorner = '4';
+                nextEdgeToCorner = '#4';
+            } else {
+                edgeToCorner = '2';
+                nextEdgeToCorner = '#2';
+            }
+        } else if (boxID === '3') {
+            if ($('#2').hasClass('taken')) {
+                edgeToCorner = '6';
+                nextEdgeToCorner = '#6';
+            } else {
+                edgeToCorner = '2';
+                nextEdgeToCorner = '#2';
+            }
+        } else if (boxID === '7') {
+            if ($('#6').hasClass('taken')) {
+                edgeToCorner = '8';
+                nextEdgeToCorner = '#8';
+            } else {
+                edgeToCorner = '4';
+                nextEdgeToCorner = '#4';
+            }
+        } else if (boxID === '9') {
+            if ($('#6').hasClass('taken')) {
+                edgeToCorner = '8';
+                nextEdgeToCorner = '#8';
+            } else {
+                edgeToCorner = '6';
+                nextEdgeToCorner = '#6';
+            }        
+        }
+        computerSquaresArr.push(edgeToCorner);
+        if (computerIcon === 'X') {
+            $(nextEdgeToCorner)
+                .children('.player-icon-x')
+                .delay(800)
+                .fadeIn(500)
+                .addClass('taken');                   
+        } else {
+            $(nextEdgeToCorner)
+                .children('.player-icon-o')
+                .delay(800)
+                .fadeIn(500)
+                .addClass('taken');   
+        }
+        console.log("computer has played box " + nextEdgeToCorner);
+        boxCount++; 
+    };
+    
     
     /* respond to edge with adjacent corner */
     const PlayAdjCorner = function () {
@@ -240,7 +296,7 @@ $(document).ready(function(){
             var checkWP = winningPatterns[j];
             console.log("WinningPattern " + j + ": " + checkWP);
             var l = 0;
-            for (var k = 0; k < winningPatterns[l].length; k++ ) {
+            for (var k = 0; k <= winningPatterns[l].length; k++ ) {
                 var userValue = userSquaresArr[i],
                   valPresent = checkWP.indexOf(userValue, 0);
                 console.log(userValue + " is current UserValue")
@@ -283,24 +339,47 @@ $(document).ready(function(){
                 }        
             }         
         } else if (boxCount >= 3) {
-            compNextMove = BlockLogic();
+            //compNextMove = BlockLogic();
+            // Lucas's alteration now isn't working. Very bizarre. 
+            // need to figure out how to check for "taken" class before playing next move
+            BlockLogic();
           
-            console.log("Next computer's move: " + compNextMove);
-            if (computerIcon === 'X') {
-                $('#'+compNextMove)
-                    .children('.player-icon-x')
-                    .delay(800)
-                    .fadeIn(500)
-                    .addClass('taken');                                    
-            } else {
-                $('#'+compNextMove)
-                    .children('.player-icon-o')
-                    .delay(800)
-                    .fadeIn(500)
-                    .addClass('taken');  
-            }   
+            console.log("Computer's next move: " + compNextMove);
+            if ($('#'+compNextMove).hasClass('taken')) {
+                // if the user plays a corner, respond with an adjacent available edge box
+                if ((boxID === '1') || (boxID === '3') || (boxID === '7') || (boxID === '9')) {
+                    PlayEdgeToCorner(); 
+                // if the user plays an edge, respond with an adjacent available corner box
+                } else if ((boxID === '2') || (boxID === '4') || (boxID === '6') || (boxID === '8')) {
+                    PlayAdjCorner();
+                }
+            } else {    
+                console.log("computer's next move can go in box " + compNextMove + " because it's not taken");
+                if (computerIcon === 'X') {
+                    $('#'+compNextMove)
+                        .children('.player-icon-x')
+                        .delay(800)
+                        .fadeIn(500)
+                        .addClass('taken');                                    
+                } else {
+                    $('#'+compNextMove)
+                        .children('.player-icon-o')
+                        .delay(800)
+                        .fadeIn(500)
+                        .addClass('taken');  
+                }
             computerSquaresArr.push(compNextMove);
-            console.log("computer has played box " + compNextMove);
+            console.log("computer has played box #" + compNextMove);
+            }
+         /*   } else {
+                // if the user plays a corner, respond with an adjacent available edge box
+                if ((boxID === '1') || (boxID === '3') || (boxID === '7') || (boxID === '9')) {
+                    PlayEdgeToCorner(); 
+                // if the user plays an edge, respond with an adjacent available corner box
+                } else if ((boxID === '2') || (boxID === '4') || (boxID === '6') || (boxID === '8')) {
+                    PlayAdjCorner();
+                }
+            }*/ 
             boxCount++;  
         }   
     };
