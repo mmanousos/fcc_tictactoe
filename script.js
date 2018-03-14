@@ -36,12 +36,15 @@ $(document).ready(function(){
     
   /* calculate which turn should be taken */
     const DeterminePlayer = function() {
-        if (boxCount % 2 !== 0) {
+        if (boxCount === 9 ) {
+         // write script to display "tied game" announcement and reset game board   
+        } else if (boxCount % 2 !== 0) {
             ComputerPlay();
         } else {
             console.log("It's the user's turn.");
         }
     }  
+    
     
   /* user play functionality:  
   displays icon, pushes box value to array, increases box counter, marks box as taken, returns boxID and boxCount */ 
@@ -61,9 +64,9 @@ $(document).ready(function(){
             }
             $(this).addClass('taken');
             boxCount++; 
-                console.log('boxCount is = ' + boxCount);
+                console.log('boxCount is = ' + boxCount + ' and user played last');
                 console.log("user played " + boxID + ' (from UserPlay function)');
-                DeterminePlayer();
+            DeterminePlayer();
         });
     };
     
@@ -106,6 +109,7 @@ $(document).ready(function(){
         }   
         console.log("computer's plays: " + computerSquaresArr);
         boxCount++;
+        console.log('boxCount is = ' + boxCount + ' and computer played last');
     };
     
     /* respond to corner play*/ 
@@ -125,6 +129,7 @@ $(document).ready(function(){
         }
         console.log("computer has played box #5");
         boxCount++; 
+        console.log('boxCount is = ' + boxCount + ' and computer played last');
     };
     
     /* respond to edge with opposite edge*/
@@ -160,6 +165,7 @@ $(document).ready(function(){
         }
         console.log("computer has played box " + nextEdgePlay);
         boxCount++; 
+        console.log('boxCount is = ' + boxCount + ' and computer played last');
     };
     
     /* respond to corner with adjacent edge*/
@@ -215,6 +221,7 @@ $(document).ready(function(){
         }
         console.log("computer has played box " + nextEdgeToCorner);
         boxCount++; 
+        console.log('boxCount is = ' + boxCount + ' and computer played last');
     };
     
     
@@ -273,6 +280,7 @@ $(document).ready(function(){
         }
         console.log("computer has played box " + adjCornerPlay);
         boxCount++; 
+        console.log('boxCount is = ' + boxCount + ' and computer played last');
     };
     
     
@@ -334,8 +342,7 @@ $(document).ready(function(){
             }         
         } else if (boxCount >= 3) {
             //compNextMove = BlockLogic();
-            // Lucas's alteration now isn't working. Very bizarre. 
-            // need to figure out how to check for "taken" class before playing next move
+            // Lucas's alteration now isn't working and my original script for this function works fine. Very bizarre.
             BlockLogic();
           
             console.log("Computer's next move: " + compNextMove);
@@ -364,17 +371,9 @@ $(document).ready(function(){
             $('#'+compNextMove).addClass('taken');    
             computerSquaresArr.push(compNextMove);
             console.log("computer has played box #" + compNextMove);
+            boxCount++;
+            console.log('boxCount is = ' + boxCount + ' and computer played last');
             }
-         /*   } else {
-                // if the user plays a corner, respond with an adjacent available edge box
-                if ((boxID === '1') || (boxID === '3') || (boxID === '7') || (boxID === '9')) {
-                    PlayEdgeToCorner(); 
-                // if the user plays an edge, respond with an adjacent available corner box
-                } else if ((boxID === '2') || (boxID === '4') || (boxID === '6') || (boxID === '8')) {
-                    PlayAdjCorner();
-                }
-            }*/ 
-            boxCount++;  
         }   
     };
 
