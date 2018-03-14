@@ -5,9 +5,9 @@ $(document).ready(function(){
         computerSquaresArr = [],
         boxID = '',
         boxCount = 0, 
-        winningPatterns = [["1", "2", "3"], 
-                           ["4", "5", "6"], 
-                           ["7", "8", "9"], 
+        winningPatterns = [['1', '2', '3'], 
+                           ['4', '5', '6'], 
+                           ['7', '8', '9'], 
                            ['1', '4', '7'], 
                            ['2', '5', '8'], 
                            ['3', '6', '9'], 
@@ -39,11 +39,12 @@ $(document).ready(function(){
         if (boxCount % 2 !== 0) {
             ComputerPlay();
         } else {
-            console.log("it's the user's turn.");
+            console.log("It's the user's turn.");
         }
     }  
     
-  /* user play functionality - displays icon, pushes box value to array, increases box counter, marks box as taken, returns boxID and boxCount */ 
+  /* user play functionality:  
+  displays icon, pushes box value to array, increases box counter, marks box as taken, returns boxID and boxCount */ 
     const UserPlay = function () {
         $('.boxes').on('click', function() {
             boxID = this.id;
@@ -52,15 +53,13 @@ $(document).ready(function(){
             if (userIcon === 'X') {
                 $(this)
                     .children('.player-icon-x')
-                    .fadeIn(500)
-                    .addClass('taken');
-                
+                    .fadeIn(500);
             } else {
                 $(this)
                     .children('.player-icon-o')
-                    .fadeIn(500)
-                    .addClass('taken');            
+                    .fadeIn(500);            
             }
+            $(this).addClass('taken');
             boxCount++; 
                 console.log('boxCount is = ' + boxCount);
                 console.log("user played " + boxID + ' (from UserPlay function)');
@@ -298,7 +297,7 @@ $(document).ready(function(){
             var l = 0;
             for (var k = 0; k <= winningPatterns[l].length; k++ ) {
                 var userValue = userSquaresArr[i],
-                  valPresent = checkWP.indexOf(userValue, 0);
+                    valPresent = checkWP.indexOf(userValue, 0);
                 console.log(userValue + " is current UserValue")
                 if (valPresent > -1) {
                     checkWP.splice(valPresent, 1);
@@ -346,6 +345,7 @@ $(document).ready(function(){
           
             console.log("Computer's next move: " + compNextMove);
             if ($('#'+compNextMove).hasClass('taken')) {
+                console.log("the move suggested by BlockLogic " + compNextMove + " is taken. Recalculating.")
                 // if the user plays a corner, respond with an adjacent available edge box
                 if ((boxID === '1') || (boxID === '3') || (boxID === '7') || (boxID === '9')) {
                     PlayEdgeToCorner(); 
