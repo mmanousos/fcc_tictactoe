@@ -92,18 +92,17 @@ $(document).ready(function(){
         }
 
         computerSquaresArr.push(corner);
+        $(cornerPlay).addClass('taken');
         if (computerIcon === 'X') {
             $(cornerPlay)
                 .children('.player-icon-x')
                 .delay(800)
-                .fadeIn(500)
-                .addClass('taken');
+                .fadeIn(500);
         } else {
             $(cornerPlay)
                 .children('.player-icon-o')
                 .delay(800)
-                .fadeIn(500)
-                .addClass('taken');                   
+                .fadeIn(500);                   
         }   
         console.log("computer's plays: " + computerSquaresArr);
         boxCount++;
@@ -112,18 +111,17 @@ $(document).ready(function(){
     /* respond to corner play*/ 
     const PlayCenter = function() {
         computerSquaresArr.push("5");
+        $('#5').addClass('taken');
         if (computerIcon === 'X') {
             $('#5')
                 .children('.player-icon-x')
                 .delay(800)
-                .fadeIn(500)
-                .addClass('taken');                    
+                .fadeIn(500);
         } else {
             $('#5')
                 .children('.player-icon-o')
                 .delay(800)
-                .fadeIn(500)
-                .addClass('taken');   
+                .fadeIn(500);   
         }
         console.log("computer has played box #5");
         boxCount++; 
@@ -148,18 +146,17 @@ $(document).ready(function(){
             nextEdgePlay = '#2';
         }
         computerSquaresArr.push(nextEdge);
+        $(nextEdgePlay).addClass('taken');
         if (computerIcon === 'X') {
             $(nextEdgePlay)
                 .children('.player-icon-x')
                 .delay(800)
-                .fadeIn(500)
-                .addClass('taken');                   
+                .fadeIn(500);
         } else {
             $(nextEdgePlay)
                 .children('.player-icon-o')
                 .delay(800)
-                .fadeIn(500)
-                .addClass('taken');   
+                .fadeIn(500);
         }
         console.log("computer has played box " + nextEdgePlay);
         boxCount++; 
@@ -204,18 +201,17 @@ $(document).ready(function(){
             }        
         }
         computerSquaresArr.push(edgeToCorner);
+        $(nextEdgeToCorner).addClass('taken');
         if (computerIcon === 'X') {
             $(nextEdgeToCorner)
                 .children('.player-icon-x')
                 .delay(800)
-                .fadeIn(500)
-                .addClass('taken');                   
+                .fadeIn(500);                   
         } else {
             $(nextEdgeToCorner)
                 .children('.player-icon-o')
                 .delay(800)
-                .fadeIn(500)
-                .addClass('taken');   
+                .fadeIn(500);   
         }
         console.log("computer has played box " + nextEdgeToCorner);
         boxCount++; 
@@ -263,18 +259,17 @@ $(document).ready(function(){
         }
         
         computerSquaresArr.push(adjCorner);
+        $(adjCornerPlay).addClass('taken');
         if (computerIcon === 'X') {
             $(adjCornerPlay)
                 .children('.player-icon-x')
                 .delay(800)
-                .fadeIn(500)
-                .addClass('taken');                    
+                .fadeIn(500);                    
         } else {
             $(adjCornerPlay)
                 .children('.player-icon-o')
                 .delay(800)
-                .fadeIn(500)
-                .addClass('taken');   
+                .fadeIn(500);   
         }
         console.log("computer has played box " + adjCornerPlay);
         boxCount++; 
@@ -359,15 +354,14 @@ $(document).ready(function(){
                     $('#'+compNextMove)
                         .children('.player-icon-x')
                         .delay(800)
-                        .fadeIn(500)
-                        .addClass('taken');                                    
+                        .fadeIn(500);                                    
                 } else {
                     $('#'+compNextMove)
                         .children('.player-icon-o')
                         .delay(800)
-                        .fadeIn(500)
-                        .addClass('taken');  
+                        .fadeIn(500);  
                 }
+            $('#'+compNextMove).addClass('taken');    
             computerSquaresArr.push(compNextMove);
             console.log("computer has played box #" + compNextMove);
             }
