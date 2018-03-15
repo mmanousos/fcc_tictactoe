@@ -17,7 +17,7 @@ $(document).ready(function(){
     
   /* hide selection board & display game board */   
     const HideSelect = function() {
-        $('.game-board').removeClass('hidden');
+        $('.game-board').toggleClass('hidden');
         $('#game-select').addClass('hidden');
     } 
 
@@ -34,16 +34,61 @@ $(document).ready(function(){
         HideSelect();
     }); 
     
+  
+      
+    
+    
   /* calculate which turn should be taken */
     const DeterminePlayer = function() {
         if (boxCount === 9 ) {
+            // display 'tied game' announcement 
          // write script to display "tied game" announcement and reset game board   
+            $('#game-board').toggleClass('hidden');
+            $('#game-status').toggleClass('hidden');
+            $('#tied-game').toggleClass('hidden');
         } else if (boxCount % 2 !== 0) {
             ComputerPlay();
         } else {
             console.log("It's the user's turn.");
         }
     }  
+    
+    
+  /* 'Play Again' button - resets game */    
+    //$('#again').on('click', Reset());
+    $('#again').on('click', function() {
+        // remove display of player markers
+        if ($('.boxes').hasClass('taken')) {
+            $('.boxes img').fadeOut(500);
+        }
+        // unmark the boxes as 'taken'
+        if ($('.boxes').hasClass('taken')) {
+            $('.boxes').removeClass('taken'); 
+        } 
+        // display the game-select choice box
+        $('#game-select').removeClass('hidden'); 
+        // hide the game-status display
+        $('#game-status').toggleClass('hidden');
+        // rehide 'tied game' notification to ready for subsequent games
+        if (boxCount === 9) { 
+            $('#tied-game').toggleClass('hidden')
+        }
+        // clear boxCount
+        userIcon = '', 
+        computerIcon = '', 
+        userSquaresArr = [],
+        computerSquaresArr = [],
+        boxID = '',
+        boxCount = 0,
+        winningPatterns = [['1', '2', '3'], 
+                       ['4', '5', '6'], 
+                       ['7', '8', '9'], 
+                       ['1', '4', '7'], 
+                       ['2', '5', '8'], 
+                       ['3', '6', '9'], 
+                       ['1', '5', '9'], 
+                       ['3', '5', '7']];
+    });
     
     
   /* user play functionality:  

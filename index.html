@@ -38,7 +38,7 @@
             </div>        
         
             <div class="row justify-content-center">                
-                <div class="game-display game-board hidden">   
+                <div class="game-display game-board hidden" id='game-board'>   
                     <div class="d-flex flex-row justify-content-center">  
                         <div class="boxes right bottom" id="1">
                             <img class="player-icon-x player-icon hidden" src="cross-small.png" alt="small cross icon">
@@ -81,6 +81,23 @@
                         <div class="boxes" id="9">
                             <img class="player-icon-x player-icon hidden" src="cross-small.png" alt="small cross icon">
                             <img class="player-icon-o player-icon hidden" src="circle-outline-128.png" alt="small circle icon">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row justify-content-center game-status hidden" id='game-status'>
+                <div class="col-offset-4">
+                    <div class="status"> 
+                        <div class="row justify-content-center">
+                            <div class="game-status user-win hidden" id="user-win">You won!</div> <!-- bright purple text #B53CB5-->
+                            <div class="game-status comp-win hidden" id="comp-win">Computer won!</div> <!-- red-ish text #D11A51-->
+                            <div class="game-status tied-game hidden" id="tied-game">Tied game!</div> <!-- blue-purple text #57209F-->
+                        </div>
+                    </div>
+                    <div class="status"> 
+                        <div class="row justify-content-center">
+                            <button class='again' id='again'>Play Again?</button> 
                         </div>
                     </div>
                 </div>

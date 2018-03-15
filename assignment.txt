@@ -133,13 +133,16 @@ if user plays edge,
                         if user plays an edge, should play an adjacent corner
                         if user plays a corner, should play an adjacent edge
                         
+            *need to correct BlockLogic to account for winning values being at the end of the winningPattern - DONE
+                        
             *At 4+ moves (and all even number of moves after) [boxCount === 4 or ((boxCount % 2 === 0) && (boxCount > 3))], 
             computer should check to see if it can win (if any of its array matches the winning patterns - maybe can reuse part of 
             BlockLogic function to run this check)*
             
-            *make sure computer's moves are pushed to computerSquaresArr in all functions*
+            *make sure computer's moves are pushed to computerSquaresArr in all functions* - DONE
                     
-                    
+   ** if boxCount === 9; display "tied game" and reset board ** 
+   Possibly have a "reset" or "play again" button that displays after "tied" or either player wins. 
                     
         
     
