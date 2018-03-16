@@ -3,6 +3,7 @@ $(document).ready(function(){
         computerIcon = '', 
         userSquaresArr = [],
         computerSquaresArr = [],
+        rand = Math.random(),
         computerNextMove = '',
         boxID = '',
         boxCount = 0, 
@@ -36,7 +37,7 @@ $(document).ready(function(){
     }); 
     
     
-  /* calculate which turn should be taken */
+  /* calculate which turn should be taken & if game is over */
     const DeterminePlayer = function() {
         if (boxCount === 9 ) {
             // if userSquaresArr contains a winningPattern, display 'user-win' message
@@ -122,14 +123,14 @@ $(document).ready(function(){
         });
     };
     
+   /* user plays if no moves have been made */ 
     if (boxCount === 0) {
         UserPlay();
     } 
     
-    /* respond to center play */ 
+   /* respond to center play */ 
     const PlayCorner = function() {
-        var corner = '',
-            rand = Math.random();
+        var corner = '';
         
         if (rand < .249) {
             corner = '1';
@@ -278,8 +279,7 @@ $(document).ready(function(){
     
     /* respond to edge with a random adjacent corner */
     const PlayRandAdjCorner = function () {
-        var randAdjCorner = '',
-            rand = Math.random();
+        var randAdjCorner = '';
         
         if (boxID === '2') {
             if (rand < .499) {
