@@ -3,6 +3,7 @@ $(document).ready(function(){
         computerIcon = '', 
         userSquaresArr = [],
         computerSquaresArr = [],
+        computerNextMove = '',
         boxID = '',
         boxCount = 0, 
         winningPatterns = [['1', '2', '3'], 
@@ -128,38 +129,33 @@ $(document).ready(function(){
     /* respond to center play */ 
     const PlayCorner = function() {
         var corner = '',
-            cornerPlay = '',
             rand = Math.random();
         
         if (rand < .249) {
             corner = '1';
-            cornerPlay = '#1';
         } else if (rand < .499) {
             corner = '3';
-            cornerPlay = '#3';
         } else if (rand < .749) {
             corner = '7';
-            cornerPlay = '#7';
         } else {
             corner = '9';
-            cornerPlay = '#9';
         }
 
         computerSquaresArr.push(corner);
-        $(cornerPlay).addClass('taken');
+        $('#'+corner).addClass('taken');
         if (computerIcon === 'X') {
-            $(cornerPlay)
+            $('#'+corner)
                 .children('.player-icon-x')
                 .delay(800)
                 .fadeIn(500);
         } else {
-            $(cornerPlay)
+            $('#'+corner)
                 .children('.player-icon-o')
                 .delay(800)
                 .fadeIn(500);                   
         }   
         console.log("computer's plays: " + computerSquaresArr);
-        console.log("computer has played box #5 (from PlayCorner)");
+        console.log("computer has played box #" + corner + "(from PlayCorner)");
         boxCount++;
         console.log('boxCount is = ' + boxCount + ' and computer played last');
     };
@@ -186,108 +182,95 @@ $(document).ready(function(){
     
     /* respond to edge with opposite edge*/
     const PlayOppositeEdge = function() {
-        var nextEdge = '',
-            nextEdgePlay = '';
+        var nextEdge = '';
         
         if (boxID === '2') {
             if (!$('#8').hasClass('taken')) {
                 nextEdge = '8';
-                nextEdgePlay = '#8';
             } else {
                 PlayAdjCorner();
             }
         } else if (boxID === '4') {
             if (!$('#6').hasClass('taken')) {
                 nextEdge = '6';
-                nextEdgePlay = '#6';
             } else {
                 PlayAdjCorner();
             }
         } else if (boxID === '6') {
             if (!$('#4').hasClass('taken')) {
                 nextEdge = '4';
-                nextEdgePlay = '#4';
             } else {
                 PlayAdjCorner();
             }
         } else if (boxID === '8') {
             if (!$('#2').hasClass('taken')) {
                 nextEdge = '2';
-                nextEdgePlay = '#2';
             } else {
                 PlayAdjCorner();
             }
         }
         computerSquaresArr.push(nextEdge);
-        $(nextEdgePlay).addClass('taken');
+        $('#'+nextEdge).addClass('taken');
         if (computerIcon === 'X') {
-            $(nextEdgePlay)
+            $('#'+nextEdge)
                 .children('.player-icon-x')
                 .delay(800)
                 .fadeIn(500);
         } else {
-            $(nextEdgePlay)
+            $('#'+nextEdge)
                 .children('.player-icon-o')
                 .delay(800)
                 .fadeIn(500);
         }
-        console.log("computer has played box " + nextEdgePlay + " (from PlayOppositeEdge)");
+        console.log("computer has played box #" + nextEdge + " (from PlayOppositeEdge)");
         boxCount++; 
         console.log('boxCount is = ' + boxCount + ' and computer played last');
     };
     
     /* respond to corner with adjacent edge*/
     const PlayEdgeToCorner = function() {
-        var edgeToCorner = '',
-            nextEdgeToCorner = '';
+        var edgeToCorner = '';
+            
         
         if (boxID === '1') {
             if ($('#2').hasClass('taken')) {
                 edgeToCorner = '4';
-                nextEdgeToCorner = '#4';
             } else {
                 edgeToCorner = '2';
-                nextEdgeToCorner = '#2';
             }
         } else if (boxID === '3') {
             if ($('#2').hasClass('taken')) {
                 edgeToCorner = '6';
-                nextEdgeToCorner = '#6';
             } else {
                 edgeToCorner = '2';
-                nextEdgeToCorner = '#2';
             }
         } else if (boxID === '7') {
             if ($('#6').hasClass('taken')) {
                 edgeToCorner = '8';
-                nextEdgeToCorner = '#8';
             } else {
                 edgeToCorner = '4';
-                nextEdgeToCorner = '#4';
             }
         } else if (boxID === '9') {
             if ($('#6').hasClass('taken')) {
                 edgeToCorner = '8';
-                nextEdgeToCorner = '#8';
             } else {
                 edgeToCorner = '6';
-                nextEdgeToCorner = '#6';
             }        
         }
         computerSquaresArr.push(edgeToCorner);
-        $(nextEdgeToCorner).addClass('taken');
+        $('#'+edgeToCorner).addClass('taken');
         if (computerIcon === 'X') {
             $(nextEdgeToCorner)
                 .children('.player-icon-x')
                 .delay(800)
                 .fadeIn(500);                   
         } else {
-            $(nextEdgeToCorner)
+            $('#'+edgeToCorner)
                 .children('.player-icon-o')
                 .delay(800)
                 .fadeIn(500);   
         }
-        console.log("computer has played box " + nextEdgeToCorner + " (from PlayEdgeToCorner)");
+        console.log("computer has played box #" + edgeToCorner + " (from PlayEdgeToCorner)");
         boxCount++; 
         console.log('boxCount is = ' + boxCount + ' and computer played last');
     };
@@ -296,57 +279,48 @@ $(document).ready(function(){
     /* respond to edge with a random adjacent corner */
     const PlayRandAdjCorner = function () {
         var randAdjCorner = '',
-            randAdjCornerPlay = '',
             rand = Math.random();
         
         if (boxID === '2') {
             if (rand < .499) {
                 randAdjCorner = '1';
-                randAdjCornerPlay = '#1';
             } else {
                 randAdjCorner = '3';
-                randAdjCornerPlay = '#3';
             }
         } else if (boxID === '4') {
             if (rand < .499) {
                 randAdjCorner = '1';
-                randAdjCornerPlay = '#1';
             } else {
                 randAdjCorner = '7';
-                randAdjCornerPlay = '#7';
             }
         } else if (boxID === '6') {
             if (rand < .499) {
                 randAdjCorner = '3';
-                randAdjCornerPlay = '#3';
             } else {
                 randAdjCorner = '7';
-                randAdjCornerPlay = '#7';
             }
         } else if (boxID === '8') {
             if (rand < .499) {
                 randAdjCorner = '7';
-                randAdjCornerPlay = '#7';
             } else {
                 randAdjCorner = '9';
-                randAdjCornerPlay = '#9';
             }
         }
         
         computerSquaresArr.push(randAdjCorner);
-        $(randAdjCornerPlay).addClass('taken');
+        $(randAdjCorner).addClass('taken');
         if (computerIcon === 'X') {
-            $(randAdjCornerPlay)
+            $('#'+randAdjCorner)
                 .children('.player-icon-x')
                 .delay(800)
                 .fadeIn(500);                    
         } else {
-            $(randAdjCornerPlay)
+            $('#'+randAdjCorner)
                 .children('.player-icon-o')
                 .delay(800)
                 .fadeIn(500);   
         }
-        console.log("computer has played box " + randAdjCornerPlay + " (from PlayRandAdjCorner)");
+        console.log("computer has played box #" + randAdjCorner + " (from PlayRandAdjCorner)");
         boxCount++; 
         console.log('boxCount is = ' + boxCount + ' and computer played last');
     };
@@ -354,65 +328,56 @@ $(document).ready(function(){
     
   /* respond to edge play with adjacent corner - if available */ 
     const PlayAdjCorner = function () {
-        var adjCorner = '',
-            adjCornerPlay = '';
+        var adjCorner = '';
         
         if (boxID === '2') {
             if (!$('#1').hasClass('taken')) {
                 adjCorner = '1';
-                adjCornerPlay = '#1';
             } else if (!$('#3').hasClass('taken')) {
-                adjCornerdjCorner = '3';
-                adjCornerPlay = '#3';
+                adjCorner = '3';
             } else {
                 PlayOppositeEdge();
             }
         } else if (boxID === '4') {
             if ($('#1').hasClass('taken')) {
                 adjCorner = '7';
-                adjCornerPlay = '#7';
             } else if ($('#7').hasClass('taken')) {
                 adjCorner = '1';
-                adjCornerPlay = '#1';
             } else {
                 PlayOppositeEdge();
             }
         } else if (boxID === '6') {
             if ($('#3').hasClass('taken')) {
                 adjCorner = '9';
-                adjCornerPlay = '#9';
             } else if ($('#9').hasClass('taken')) {
                 adjCorner = '3';
-                adjCornerPlay = '#3';
             } else {
                 PlayOppositeEdge();
             }
         } else if (boxID === '8') {
             if ($('#7').hasClass('taken')) {
                 adjCorner = '9';
-                adjCornerPlay = '#9';
             } else if ($('#9').hasClass('taken')) {
                 adjCorner = '7';
-                adjCornerPlay = '#7';
             } else {
                 PlayOppositeEdge();
             }
         }
         
         computerSquaresArr.push(adjCorner);
-        $(adjCornerPlay).addClass('taken');
+        $('#'+adjCorner).addClass('taken');
         if (computerIcon === 'X') {
-            $(adjCornerPlay)
+            $('#'+adjCorner)
                 .children('.player-icon-x')
                 .delay(800)
                 .fadeIn(500);                    
         } else {
-            $(adjCornerPlay)
+            $('#'+adjCorner)
                 .children('.player-icon-o')
                 .delay(800)
                 .fadeIn(500);   
         }
-        console.log("computer has played box " + adjCornerPlay + " (from PlayAdjCorner)");
+        console.log("computer has played box #" + adjCorner + " (from PlayAdjCorner)");
         boxCount++; 
         console.log('boxCount is = ' + boxCount + ' and computer played last');
     };
@@ -456,9 +421,13 @@ $(document).ready(function(){
                     usArrPos++; 
                     console.log("length of checkWP:" + checkWP.length);
                     if (checkWPleng < 2) {
-                        var compNextMove = checkWP[0];
+                        compNextMove = checkWP[0];
                         console.log("computer's next move should be " + compNextMove);
-                        return compNextMove;
+                      /*  if ($('#'+compNextMove).hasClass('taken')) {
+                            // go to next subarray in WP and continue checking against possible blocks (wpPos) 
+                        } else { */
+                            return compNextMove;
+                    //    }
                     }
                 } else if (valPresent == -1) { 
                   usArrPos++; 
