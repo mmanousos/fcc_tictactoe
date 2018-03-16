@@ -4,7 +4,7 @@ $(document).ready(function(){
         userSquaresArr = [],
         computerSquaresArr = [],
         rand = Math.random(),
-        computerNextMove = '',
+        compNextMove = '',
         boxID = '',
         boxCount = 0, 
         winningPatterns = [['1', '2', '3'], 
@@ -123,12 +123,12 @@ $(document).ready(function(){
         });
     };
     
-   /* user plays if no moves have been made */ 
+  /* user plays if no moves have been made */ 
     if (boxCount === 0) {
         UserPlay();
     } 
     
-   /* respond to center play */ 
+  /* respond to center play */ 
     const PlayCorner = function() {
         var corner = '';
         
@@ -161,27 +161,21 @@ $(document).ready(function(){
         console.log('boxCount is = ' + boxCount + ' and computer played last');
     };
     
-    /* respond to corner play*/ 
+  /* respond to corner play*/ 
     const PlayCenter = function() {
-        computerSquaresArr.push("5");
-        $('#5').addClass('taken');
-        if (computerIcon === 'X') {
-            $('#5')
-                .children('.player-icon-x')
-                .delay(800)
-                .fadeIn(500);
+        if (boxCount === 1) {
+            compNextMove = '5';
+        //    console.log("computer has played box #5 (from PlayCenter)");
         } else {
-            $('#5')
-                .children('.player-icon-o')
-                .delay(800)
-                .fadeIn(500);   
+            if ($('#5').hasClass('taken')) { // if the center box is taken
+                compNextMove = PlayAdjEdge(); // play adacent edge
+            } else {
+                compNextMove = '5';
+            }
         }
-        console.log("computer has played box #5 (from PlayCenter)");
-        boxCount++; 
-        console.log('boxCount is = ' + boxCount + ' and computer played last');
     };
     
-    /* respond to edge with opposite edge*/
+  /* respond to edge with opposite edge*/
     const PlayOppositeEdge = function() {
         var nextEdge = '';
         
@@ -229,49 +223,49 @@ $(document).ready(function(){
     };
     
     /* respond to corner with adjacent edge*/
-    const PlayEdgeToCorner = function() {
-        var edgeToCorner = '';
+    const PlayAdjEdge = function() {
+        var adjEdge = '';
             
         
         if (boxID === '1') {
             if ($('#2').hasClass('taken')) {
-                edgeToCorner = '4';
+                adjEdge = '4';
             } else {
-                edgeToCorner = '2';
+                adjEdge = '2';
             }
         } else if (boxID === '3') {
             if ($('#2').hasClass('taken')) {
-                edgeToCorner = '6';
+                adjEdge = '6';
             } else {
-                edgeToCorner = '2';
+                adjEdge = '2';
             }
         } else if (boxID === '7') {
             if ($('#6').hasClass('taken')) {
-                edgeToCorner = '8';
+                adjEdge = '8';
             } else {
-                edgeToCorner = '4';
+                adjEdge = '4';
             }
         } else if (boxID === '9') {
             if ($('#6').hasClass('taken')) {
-                edgeToCorner = '8';
+                adjEdge = '8';
             } else {
-                edgeToCorner = '6';
+                adjEdge = '6';
             }        
         }
-        computerSquaresArr.push(edgeToCorner);
-        $('#'+edgeToCorner).addClass('taken');
+        computerSquaresArr.push(adjEdge);
+        $('#'+adjEdge).addClass('taken');
         if (computerIcon === 'X') {
-            $(nextEdgeToCorner)
+            $('#'+adjEdge)
                 .children('.player-icon-x')
                 .delay(800)
                 .fadeIn(500);                   
         } else {
-            $('#'+edgeToCorner)
+            $('#'+adjEdge)
                 .children('.player-icon-o')
                 .delay(800)
                 .fadeIn(500);   
         }
-        console.log("computer has played box #" + edgeToCorner + " (from PlayEdgeToCorner)");
+        console.log("computer has played box #" + adjEdge + " (from PlayAdjEdge)");
         boxCount++; 
         console.log('boxCount is = ' + boxCount + ' and computer played last');
     };
@@ -447,11 +441,11 @@ $(document).ready(function(){
             //computer plays
         if (boxCount < 2) {
             if (boxID === '5') {
-                PlayCorner();
+                compNextMove = PlayCorner();
             } else if ((boxID === '1') || (boxID === '3') || (boxID === '7') || (boxID === '9')) {
                 PlayCenter(); 
             } else if ((boxID === '2') || (boxID === '4') || (boxID === '6') || (boxID === '8')) {
-                var rand = Math.random();
+                // if an edge is played, randomly play the center, the opposite edge, or an adjacent corner    
                 if (rand < .333) {
                     PlayCenter();
                 } else if (rand < .666) {
@@ -459,10 +453,25 @@ $(document).ready(function(){
                 } else {
                     PlayRandAdjCorner();
                 }        
-            }         
+            }
+            if (computerIcon === 'X') {
+                $('#'+compNextMove)
+                    .children('.player-icon-x')
+                    .delay(800)
+                    .fadeIn(500);                                    
+            } else {
+                $('#'+compNextMove)
+                    .children('.player-icon-o')
+                    .delay(800)
+                    .fadeIn(500);  
+            }
+            $('#'+compNextMove).addClass('taken');    
+            computerSquaresArr.push(compNextMove);
+            console.log("computer has played box #" + compNextMove);
+            boxCount++;
+            console.log('boxCount is = ' + boxCount + ' and computer played last');
+            
         } else if (boxCount >= 3) {
-            //compNextMove = BlockLogic();
-            // Lucas's alteration now isn't working and my original script for this function works fine. Very bizarre.
             compNextMove = BlockLogic();
           
             console.log("Computer's next move: " + compNextMove);
@@ -470,7 +479,7 @@ $(document).ready(function(){
                 console.log("the move suggested by BlockLogic " + compNextMove + " is taken. Recalculating.")
                 // if the user plays a corner, respond with an adjacent available edge box
                 if ((boxID === '1') || (boxID === '3') || (boxID === '7') || (boxID === '9')) {
-                    PlayEdgeToCorner(); 
+                    PlayAdjEdge(); 
                 // if the user plays an edge, respond with an adjacent available corner box
                 } else if ((boxID === '2') || (boxID === '4') || (boxID === '6') || (boxID === '8')) {
                     PlayAdjCorner();
@@ -499,5 +508,5 @@ $(document).ready(function(){
         }   
     };
 
-    
 });
+
