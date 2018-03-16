@@ -153,6 +153,7 @@ $(document).ready(function(){
                 .fadeIn(500);                   
         }   
         console.log("computer's plays: " + computerSquaresArr);
+        console.log("computer has played box #5 (from PlayCorner)");
         boxCount++;
         console.log('boxCount is = ' + boxCount + ' and computer played last');
     };
@@ -172,7 +173,7 @@ $(document).ready(function(){
                 .delay(800)
                 .fadeIn(500);   
         }
-        console.log("computer has played box #5");
+        console.log("computer has played box #5 (from PlayCenter)");
         boxCount++; 
         console.log('boxCount is = ' + boxCount + ' and computer played last');
     };
@@ -208,7 +209,7 @@ $(document).ready(function(){
                 .delay(800)
                 .fadeIn(500);
         }
-        console.log("computer has played box " + nextEdgePlay);
+        console.log("computer has played box " + nextEdgePlay + " (from PlayOppositeEdge)");
         boxCount++; 
         console.log('boxCount is = ' + boxCount + ' and computer played last');
     };
@@ -264,49 +265,115 @@ $(document).ready(function(){
                 .delay(800)
                 .fadeIn(500);   
         }
-        console.log("computer has played box " + nextEdgeToCorner);
+        console.log("computer has played box " + nextEdgeToCorner + " (from PlayEdgeToCorner)");
         boxCount++; 
         console.log('boxCount is = ' + boxCount + ' and computer played last');
     };
     
     
-    /* respond to edge with adjacent corner */
-    const PlayAdjCorner = function () {
-        var adjCorner = '',
-            adjCornerPlay = '',
+    /* respond to edge with a random adjacent corner */
+    const PlayRandAdjCorner = function () {
+        var randAdjCorner = '',
+            randAdjCornerPlay = '',
             rand = Math.random();
         
         if (boxID === '2') {
             if (rand < .499) {
-                adjCorner = '1';
-                adjCornerPlay = '#1';
+                randAdjCorner = '1';
+                randAdjCornerPlay = '#1';
             } else {
-                adjCorner = '3';
-                adjCornerPlay = '#3';
+                randAdjCorner = '3';
+                randAdjCornerPlay = '#3';
             }
         } else if (boxID === '4') {
             if (rand < .499) {
-                adjCorner = '1';
-                adjCornerPlay = '#1';
+                randAdjCorner = '1';
+                randAdjCornerPlay = '#1';
             } else {
-                adjCorner = '7';
-                adjCornerPlay = '#7';
+                randAdjCorner = '7';
+                randAdjCornerPlay = '#7';
             }
         } else if (boxID === '6') {
             if (rand < .499) {
-                adjCorner = '3';
-                adjCornerPlay = '#3';
+                randAdjCorner = '3';
+                randAdjCornerPlay = '#3';
             } else {
-                adjCorner = '7';
-                adjCornerPlay = '#7';
+                randAdjCorner = '7';
+                randAdjCornerPlay = '#7';
             }
         } else if (boxID === '8') {
             if (rand < .499) {
+                randAdjCorner = '7';
+                randAdjCornerPlay = '#7';
+            } else {
+                randAdjCorner = '9';
+                randAdjCornerPlay = '#9';
+            }
+        }
+        
+        computerSquaresArr.push(randAdjCorner);
+        $(randAdjCornerPlay).addClass('taken');
+        if (computerIcon === 'X') {
+            $(randAdjCornerPlay)
+                .children('.player-icon-x')
+                .delay(800)
+                .fadeIn(500);                    
+        } else {
+            $(randAdjCornerPlay)
+                .children('.player-icon-o')
+                .delay(800)
+                .fadeIn(500);   
+        }
+        console.log("computer has played box " + randAdjCornerPlay + " (from PlayRandAdjCorner)");
+        boxCount++; 
+        console.log('boxCount is = ' + boxCount + ' and computer played last');
+    };
+    
+    
+  /* respond to edge play with adjacent corner - if available */ 
+    const PlayAdjCorner = function () {
+        var adjCorner = '',
+            adjCornerPlay = '';
+        
+        if (boxID === '2') {
+            if (!$('#1').hasClass('taken')) {
+                adjCorner = '1';
+                adjCornerPlay = '#1';
+            } else if (!$('#3').hasClass('taken')) {
+                adjCornerdjCorner = '3';
+                adjCornerPlay = '#3';
+            } else {
+                PlayOppositeEdge();
+            }
+        } else if (boxID === '4') {
+            if ($('#1').hasClass('taken')) {
+                adjCorner = '7';
+                adjCornerPlay = '#7';
+            } else if ($('#7').hasClass('taken')) {
+                adjCorner = '1';
+                adjCornerPlay = '#1';
+            } else {
+                PlayOppositeEdge();
+            }
+        } else if (boxID === '6') {
+            if ($('#3').hasClass('taken')) {
+                adjCorner = '9';
+                adjCornerPlay = '#9';
+            } else if ($('#9').hasClass('taken')) {
+                adjCorner = '3';
+                adjCornerPlay = '#3';
+            } else {
+                PlayOppositeEdge();
+            }
+        } else if (boxID === '8') {
+            if ($('#7').hasClass('taken')) {
+                adjCorner = '9';
+                adjCornerPlay = '#9';
+            } else if ($('#9').hasClass('taken')) {
                 adjCorner = '7';
                 adjCornerPlay = '#7';
             } else {
-                adjCorner = '9';
-                adjCornerPlay = '#9';
+                PlayOppositeEdge();
             }
         }
         
@@ -323,10 +390,11 @@ $(document).ready(function(){
                 .delay(800)
                 .fadeIn(500);   
         }
-        console.log("computer has played box " + adjCornerPlay);
+        console.log("computer has played box " + adjCornerPlay + " (from PlayAdjCorner)");
         boxCount++; 
         console.log('boxCount is = ' + boxCount + ' and computer played last');
     };
+    
     
     
     const BlockLogic = function () {
@@ -346,7 +414,8 @@ $(document).ready(function(){
             for (var k = 0; k <= winningPatterns[l].length; k++ ) {
                 var userValue = userSquaresArr[i],
                     valPresent = checkWP.indexOf(userValue, 0);
-                console.log(userValue + " is current UserValue")
+                console.log("user has played " + userSquaresArr);
+                console.log(userValue + " is current UserValue");
                 if (valPresent > -1) {
                     checkWP.splice(valPresent, 1);
                     var checkWPleng = checkWP.length;    
@@ -382,7 +451,7 @@ $(document).ready(function(){
                 } else if (rand < .666) {
                     PlayOppositeEdge();
                 } else {
-                    PlayAdjCorner();
+                    PlayRandAdjCorner();
                 }        
             }         
         } else if (boxCount >= 3) {
@@ -399,6 +468,8 @@ $(document).ready(function(){
                 // if the user plays an edge, respond with an adjacent available corner box
                 } else if ((boxID === '2') || (boxID === '4') || (boxID === '6') || (boxID === '8')) {
                     PlayAdjCorner();
+                } else if (boxID === '5') {
+                    PlayCorner();
                 }
             } else {    
                 console.log("computer's next move can go in box " + compNextMove + " because it's not taken");
