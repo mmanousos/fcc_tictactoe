@@ -222,52 +222,34 @@ $(document).ready(function(){
         console.log('boxCount is = ' + boxCount + ' and computer played last');
     };
     
-    /* respond to corner with adjacent edge*/
-    const PlayAdjEdge = function() {
-        var adjEdge = '';
-            
-        
+    /* respond to corner with adjacent edge */
+    const PlayAdjEdge = function() {            
         if (boxID === '1') {
             if ($('#2').hasClass('taken')) {
-                adjEdge = '4';
+                compNextMove = '4';
             } else {
-                adjEdge = '2';
+                compNextMove = '2';
             }
         } else if (boxID === '3') {
             if ($('#2').hasClass('taken')) {
-                adjEdge = '6';
+                compNextMove = '6';
             } else {
-                adjEdge = '2';
+                compNextMove = '2';
             }
         } else if (boxID === '7') {
             if ($('#6').hasClass('taken')) {
-                adjEdge = '8';
+                compNextMove = '8';
             } else {
-                adjEdge = '4';
+                compNextMove = '4';
             }
         } else if (boxID === '9') {
             if ($('#6').hasClass('taken')) {
-                adjEdge = '8';
+                compNextMove = '8';
             } else {
-                adjEdge = '6';
+                compNextMove = '6';
             }        
         }
-        computerSquaresArr.push(adjEdge);
-        $('#'+adjEdge).addClass('taken');
-        if (computerIcon === 'X') {
-            $('#'+adjEdge)
-                .children('.player-icon-x')
-                .delay(800)
-                .fadeIn(500);                   
-        } else {
-            $('#'+adjEdge)
-                .children('.player-icon-o')
-                .delay(800)
-                .fadeIn(500);   
-        }
-        console.log("computer has played box #" + adjEdge + " (from PlayAdjEdge)");
-        boxCount++; 
-        console.log('boxCount is = ' + boxCount + ' and computer played last');
+        //*** need to add logic in case both adjacent edges are taken ***//
     };
     
     
@@ -454,7 +436,7 @@ $(document).ready(function(){
                     PlayRandAdjCorner();
                 }        
             }
-            if (computerIcon === 'X') {
+            if (computerIcon === 'X') {P
                 $('#'+compNextMove)
                     .children('.player-icon-x')
                     .delay(800)
@@ -479,7 +461,7 @@ $(document).ready(function(){
                 console.log("the move suggested by BlockLogic " + compNextMove + " is taken. Recalculating.")
                 // if the user plays a corner, respond with an adjacent available edge box
                 if ((boxID === '1') || (boxID === '3') || (boxID === '7') || (boxID === '9')) {
-                    PlayAdjEdge(); 
+                    compNextMove = PlayAdjEdge(); 
                 // if the user plays an edge, respond with an adjacent available corner box
                 } else if ((boxID === '2') || (boxID === '4') || (boxID === '6') || (boxID === '8')) {
                     PlayAdjCorner();
