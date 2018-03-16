@@ -128,7 +128,7 @@ $(document).ready(function(){
         UserPlay();
     } 
     
-  /* respond to center play */ 
+  /* respond to center play */ /* REVISE */
     const PlayCorner = function() {
         var corner = '';
         
@@ -177,49 +177,43 @@ $(document).ready(function(){
     
   /* respond to edge with opposite edge*/
     const PlayOppositeEdge = function() {
-        var nextEdge = '';
-        
-        if (boxID === '2') {
-            if (!$('#8').hasClass('taken')) {
-                nextEdge = '8';
-            } else {
-                PlayAdjCorner();
+        if (boxCount === 1) {
+            if (boxID === '2') { 
+                compNextMove = '8';
+            } else if (boxID === '4') {
+                compNextMove = '6';
+            } else if (boxID === '6') {
+                compNextMove = '4';
+            } else if (boxID === '8') {
+                compNextMove = '2';  
             }
-        } else if (boxID === '4') {
-            if (!$('#6').hasClass('taken')) {
-                nextEdge = '6';
-            } else {
-                PlayAdjCorner();
-            }
-        } else if (boxID === '6') {
-            if (!$('#4').hasClass('taken')) {
-                nextEdge = '4';
-            } else {
-                PlayAdjCorner();
-            }
-        } else if (boxID === '8') {
-            if (!$('#2').hasClass('taken')) {
-                nextEdge = '2';
-            } else {
-                PlayAdjCorner();
+        } else { 
+            if (boxID === '2') {
+                if (!$('#8').hasClass('taken')) {
+                    compNextMove = '8';
+                } else {
+                    compNextMove = PlayAdjCorner();
+                }
+            } else if (boxID === '4') {
+                if (!$('#6').hasClass('taken')) {
+                    compNextMove = '6';
+                } else {
+                    compNextMove = PlayAdjCorner();
+                }
+            } else if (boxID === '6') {
+                if (!$('#4').hasClass('taken')) {
+                    compNextMove = '4';
+                } else {
+                    compNextMove = PlayAdjCorner();
+                }
+            } else if (boxID === '8') {
+                if (!$('#2').hasClass('taken')) {
+                    compNextMove = '2';
+                } else {
+                    compNextMove = PlayAdjCorner();
+                }
             }
         }
-        computerSquaresArr.push(nextEdge);
-        $('#'+nextEdge).addClass('taken');
-        if (computerIcon === 'X') {
-            $('#'+nextEdge)
-                .children('.player-icon-x')
-                .delay(800)
-                .fadeIn(500);
-        } else {
-            $('#'+nextEdge)
-                .children('.player-icon-o')
-                .delay(800)
-                .fadeIn(500);
-        }
-        console.log("computer has played box #" + nextEdge + " (from PlayOppositeEdge)");
-        boxCount++; 
-        console.log('boxCount is = ' + boxCount + ' and computer played last');
     };
     
     /* respond to corner with adjacent edge */
@@ -428,10 +422,11 @@ $(document).ready(function(){
                 PlayCenter(); 
             } else if ((boxID === '2') || (boxID === '4') || (boxID === '6') || (boxID === '8')) {
                 // if an edge is played, randomly play the center, the opposite edge, or an adjacent corner    
+                console.log('random value is ' + rand + ' to determine center, oppEdge or AdjCorner' );
                 if (rand < .333) {
                     PlayCenter();
                 } else if (rand < .666) {
-                    PlayOppositeEdge();
+                    compNextMove = PlayOppositeEdge();
                 } else {
                     PlayRandAdjCorner();
                 }        
