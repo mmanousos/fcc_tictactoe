@@ -2,7 +2,7 @@ $(document).ready(function(){
     var userIcon = '', 
         computerIcon = '', 
         userSquaresArr = [],
-        computerSquaresArr = [],
+        compSquaresArr = [],
         rand = Math.random(),
         compNextMove = '',
         boxID = '',
@@ -85,7 +85,7 @@ $(document).ready(function(){
         userIcon = '', 
         computerIcon = '', 
         userSquaresArr = [],
-        computerSquaresArr = [],
+        compSquaresArr = [],
         boxID = '',
         boxCount = 0,
         winningPatterns = [['1', '2', '3'], 
@@ -348,6 +348,62 @@ $(document).ready(function(){
             };
         };
     }
+    
+    const WinLogic = function () {
+             // check if userSquaresArr contains the same values as any of the arrays in winningPatterns
+    // duplicate the winningPattern array currently checking (using .slice()). 
+    // if userSquaresArr first value matches any value in that array, remove that value from the array
+    // then check second value in userSquaresArr against remaining values in same array in winningPattern. 
+    // if an additional value matches, remove that value.
+    // return the remaining value for the computer to play. 
+    // if none of the moves match a winningPattern, select a random untaken box to play? (or go for winning move)    
+        // csArr is short for compSquaresArr
+        // wp is short for winningPatterns
+        
+        // csArrPos is position within compSquaresArr 
+        // wpPos is position within winningPatterns (to fecth subArray)
+        // wpSubArrPos is position within winningPatterns 
+        // wpCurVal is value within winningPatterns subArray 
+        
+        var csArrPos = 0;
+
+        for (var wpVal = 0; wpVal < winningPatterns.length; wpVal++ ) { 
+            if (csArrPos >= userSquaresArr.length) { 
+              csArrPos = 0; 
+            }
+            var checkWP = winningPatterns[wpVal].slice(); 
+            console.log("WinningPattern " + wpVal + ": " + checkWP);
+            var wpPos = 0;
+            for (var wpCurVal = 0; wpCurVal <= winningPatterns[wpPos].length; wpCurVal++ ) {
+                var compValue = compSquaresArr[csArrPos],
+                    valPresent = checkWP.indexOf(compValue, 0);
+                console.log("computer has played " + compSquaresArr);
+                console.log(compValue + " is current compValue");
+                if (valPresent > -1) {
+                    checkWP.splice(valPresent, 1);
+                    var checkWPleng = checkWP.length;    
+                    console.log("the compValue is present in the current winningPattern at position " + valPresent)
+                    csArrPos++; 
+                    console.log("length of checkWP:" + checkWP.length);
+                    if (checkWPleng < 2) {
+                        compNextMove = checkWP[0];
+                        console.log("computer's next move to win should be " + compNextMove);
+                      /*  if ($('#'+compNextMove).hasClass('taken')) {
+                            // go to next subarray in WP and continue checking against possible blocks (wpPos) 
+                        } else { */
+                            return compNextMove;
+                    //    }
+                    }
+                } else if (valPresent == -1) { 
+                  csArrPos++; 
+                } /* else {  // if the computer hasn't played any of the winning combinations
+                    // select random untaken box ?
+                    /* cycle through 1-9 until find one not in userSquaresArr or compSquaresArr? */
+                    /* merge both & then check? 
+                } */
+            };
+        };
+    }
         
     
     const ComputerPlay = function() {
@@ -381,13 +437,17 @@ $(document).ready(function(){
                     .fadeIn(500);  
             }
             $('#'+compNextMove).addClass('taken');    
-            computerSquaresArr.push(compNextMove);
+            compSquaresArr.push(compNextMove);
             console.log("computer has played box #" + compNextMove);
             boxCount++;
             console.log('boxCount is = ' + boxCount + ' and computer played last');
             
         } else if (boxCount >= 3) {
-            compNextMove = BlockLogic();
+            if (boxCount === 3) {
+                compNextMove = BlockLogic();
+            } else if (boxCount > 3) {
+                compNextMove = WinLogic();
+            }
           
             console.log("Computer's next move: " + compNextMove);
             if ($('#'+compNextMove).hasClass('taken')) {
@@ -415,7 +475,7 @@ $(document).ready(function(){
                         .fadeIn(500);  
                 }
             $('#'+compNextMove).addClass('taken');    
-            computerSquaresArr.push(compNextMove);
+            compSquaresArr.push(compNextMove);
             console.log("computer has played box #" + compNextMove);
             boxCount++;
             console.log('boxCount is = ' + boxCount + ' and computer played last');
