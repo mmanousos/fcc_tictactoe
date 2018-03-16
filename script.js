@@ -128,37 +128,83 @@ $(document).ready(function(){
         UserPlay();
     } 
     
-  /* respond to center play */ /* REVISE */
+  /* respond to center or edge play with corner */ /* REVISE */
     const PlayCorner = function() {
-        var corner = '';
-        
-        if (rand < .249) {
-            corner = '1';
-        } else if (rand < .499) {
-            corner = '3';
-        } else if (rand < .749) {
-            corner = '7';
+        // for first move
+        if (boxCount === 1) { 
+            // if it's the center box, play a random corner
+            if (boxID === '5') {
+                if (rand < .249) {
+                    compNextMove = '1';
+                } else if (rand < .499) {
+                    compNextMove = '3';
+                } else if (rand < .749) {
+                    compNextMove = '7';
+                } else {
+                    compNextMove = '9';
+                }
+            // otherwise, if it's an edge, play a one of it's two adjacent corners 
+            } else if (boxID === '2') {
+                if (rand < .499) {
+                    compNextMove = '1';
+                } else {
+                    compNextMove = '3';
+                }
+            } else if (boxID === '4') {
+                if (rand < .499) {
+                    compNextMove = '1';
+                } else {
+                    compNextMove = '7';
+                }
+            } else if (boxID === '6') {
+                if (rand < .499) {
+                    compNextMove = '3';
+                } else {
+                    compNextMove = '7';
+                }
+            } else if (boxID === '8') {
+                if (rand < .499) {
+                    compNextMove = '7';
+                } else {
+                    compNextMove = '9';
+                }
+            }    
         } else {
-            corner = '9';
+            // specific adjacent corner or opposite edge on subsequent moves
+            if (boxID === '2') {
+                if (!$('#1').hasClass('taken')) {
+                    compNextMove = '1';
+                } else if (!$('#3').hasClass('taken')) {
+                    compNextMove = '3';
+                } else {
+                    compNextMove = PlayOppositeEdge();
+                }
+            } else if (boxID === '4') {
+                if ($('#1').hasClass('taken')) {
+                    compNextMove = '7';
+                } else if ($('#7').hasClass('taken')) {
+                    compNextMove = '1';
+                } else {
+                    compNextMove = PlayOppositeEdge();
+                }
+            } else if (boxID === '6') {
+                if ($('#3').hasClass('taken')) {
+                    compNextMove = '9';
+                } else if ($('#9').hasClass('taken')) {
+                    compNextMove = '3';
+                } else {
+                    compNextMove = PlayOppositeEdge();
+                }
+            } else if (boxID === '8') {
+                if ($('#7').hasClass('taken')) {
+                    compNextMove = '9';
+                } else if ($('#9').hasClass('taken')) {
+                    compNextMove = '7';
+                } else {
+                    compNextMove = PlayOppositeEdge();
+                }
+            }
         }
-
-        computerSquaresArr.push(corner);
-        $('#'+corner).addClass('taken');
-        if (computerIcon === 'X') {
-            $('#'+corner)
-                .children('.player-icon-x')
-                .delay(800)
-                .fadeIn(500);
-        } else {
-            $('#'+corner)
-                .children('.player-icon-o')
-                .delay(800)
-                .fadeIn(500);                   
-        }   
-        console.log("computer's plays: " + computerSquaresArr);
-        console.log("computer has played box #" + corner + "(from PlayCorner)");
-        boxCount++;
-        console.log('boxCount is = ' + boxCount + ' and computer played last');
     };
     
   /* respond to corner play*/ 
@@ -245,78 +291,7 @@ $(document).ready(function(){
         }
         //*** need to add logic in case both adjacent edges are taken ***//
     };
-    
-    
-  /* respond to edge play with adjacent corner - if available */ 
-    const PlayAdjCorner = function () {
-        if (boxCount === 1) {
-            // random corner on opening move
-            
-            console.log('random value for corner: ' + rand);
-            if (boxID === '2') {
-                if (rand < .499) {
-                    compNextMove = '1';
-                } else {
-                    compNextMove = '3';
-                }
-            } else if (boxID === '4') {
-                if (rand < .499) {
-                    compNextMove = '1';
-                } else {
-                    compNextMove = '7';
-                }
-            } else if (boxID === '6') {
-                if (rand < .499) {
-                    compNextMove = '3';
-                } else {
-                    compNextMove = '7';
-                }
-            } else if (boxID === '8') {
-                if (rand < .499) {
-                    compNextMove = '7';
-                } else {
-                    compNextMove = '9';
-                }
-            }    
-        } else {
-            // specific corner or opposite edge on subsequent moves
-            if (boxID === '2') {
-                if (!$('#1').hasClass('taken')) {
-                    compNextMove = '1';
-                } else if (!$('#3').hasClass('taken')) {
-                    compNextMove = '3';
-                } else {
-                    compNextMove = PlayOppositeEdge();
-                }
-            } else if (boxID === '4') {
-                if ($('#1').hasClass('taken')) {
-                    compNextMove = '7';
-                } else if ($('#7').hasClass('taken')) {
-                    compNextMove = '1';
-                } else {
-                    compNextMove = PlayOppositeEdge();
-                }
-            } else if (boxID === '6') {
-                if ($('#3').hasClass('taken')) {
-                    compNextMove = '9';
-                } else if ($('#9').hasClass('taken')) {
-                    compNextMove = '3';
-                } else {
-                    compNextMove = PlayOppositeEdge();
-                }
-            } else if (boxID === '8') {
-                if ($('#7').hasClass('taken')) {
-                    compNextMove = '9';
-                } else if ($('#9').hasClass('taken')) {
-                    compNextMove = '7';
-                } else {
-                    compNextMove = PlayOppositeEdge();
-                }
-            }
-        }
-    };
-    
-    
+       
     
     const BlockLogic = function () {
              // check if userSquaresArr contains the same values as any of the arrays in winningPatterns
@@ -386,16 +361,12 @@ $(document).ready(function(){
                 PlayCenter(); 
             } else if ((boxID === '2') || (boxID === '4') || (boxID === '6') || (boxID === '8')) {
                 // if an edge is played, randomly play the center, the opposite edge, or an adjacent corner    
-                console.log('random value is ' + rand + ' to determine center, oppEdge or AdjCorner' );
                 if (rand < .333) {
                     PlayCenter();
                 } else if (rand < .666) {
-                    console.log('computer should play the Opposite Edge');
-                    //compNextMove = PlayOppositeEdge();
                     PlayOppositeEdge();
                 } else {
-                    console.log('computer should play an adjacent corner');
-                    compNextMove = PlayAdjCorner();
+                    PlayCorner();
                 }        
             }
             if (computerIcon === 'X') {P
@@ -426,7 +397,7 @@ $(document).ready(function(){
                     compNextMove = PlayAdjEdge(); 
                 // if the user plays an edge, respond with an adjacent available corner box
                 } else if ((boxID === '2') || (boxID === '4') || (boxID === '6') || (boxID === '8')) {
-                    compNextMove = PlayAdjCorner();
+                    compNextMove = PlayCorner();
                 } else if (boxID === '5') {
                     PlayCorner();
                 }
