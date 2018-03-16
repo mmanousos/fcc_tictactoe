@@ -177,7 +177,7 @@ $(document).ready(function(){
     
   /* respond to edge with opposite edge*/
     const PlayOppositeEdge = function() {
-        if (boxCount === 1) {
+        if (boxCount === 1) { 
             if (boxID === '2') { 
                 compNextMove = '8';
             } else if (boxID === '4') {
@@ -216,7 +216,7 @@ $(document).ready(function(){
         }
     };
     
-    /* respond to corner with adjacent edge */
+    /* respond to corner with adjacent edge */ /* ADDITIONS NEEDED */
     const PlayAdjEdge = function() {            
         if (boxID === '1') {
             if ($('#2').hasClass('taken')) {
@@ -247,109 +247,73 @@ $(document).ready(function(){
     };
     
     
-    /* respond to edge with a random adjacent corner */
-    const PlayRandAdjCorner = function () {
-        var randAdjCorner = '';
-        
-        if (boxID === '2') {
-            if (rand < .499) {
-                randAdjCorner = '1';
-            } else {
-                randAdjCorner = '3';
-            }
-        } else if (boxID === '4') {
-            if (rand < .499) {
-                randAdjCorner = '1';
-            } else {
-                randAdjCorner = '7';
-            }
-        } else if (boxID === '6') {
-            if (rand < .499) {
-                randAdjCorner = '3';
-            } else {
-                randAdjCorner = '7';
-            }
-        } else if (boxID === '8') {
-            if (rand < .499) {
-                randAdjCorner = '7';
-            } else {
-                randAdjCorner = '9';
-            }
-        }
-        
-        computerSquaresArr.push(randAdjCorner);
-        $(randAdjCorner).addClass('taken');
-        if (computerIcon === 'X') {
-            $('#'+randAdjCorner)
-                .children('.player-icon-x')
-                .delay(800)
-                .fadeIn(500);                    
-        } else {
-            $('#'+randAdjCorner)
-                .children('.player-icon-o')
-                .delay(800)
-                .fadeIn(500);   
-        }
-        console.log("computer has played box #" + randAdjCorner + " (from PlayRandAdjCorner)");
-        boxCount++; 
-        console.log('boxCount is = ' + boxCount + ' and computer played last');
-    };
-    
-    
   /* respond to edge play with adjacent corner - if available */ 
     const PlayAdjCorner = function () {
-        var adjCorner = '';
-        
-        if (boxID === '2') {
-            if (!$('#1').hasClass('taken')) {
-                adjCorner = '1';
-            } else if (!$('#3').hasClass('taken')) {
-                adjCorner = '3';
-            } else {
-                PlayOppositeEdge();
-            }
-        } else if (boxID === '4') {
-            if ($('#1').hasClass('taken')) {
-                adjCorner = '7';
-            } else if ($('#7').hasClass('taken')) {
-                adjCorner = '1';
-            } else {
-                PlayOppositeEdge();
-            }
-        } else if (boxID === '6') {
-            if ($('#3').hasClass('taken')) {
-                adjCorner = '9';
-            } else if ($('#9').hasClass('taken')) {
-                adjCorner = '3';
-            } else {
-                PlayOppositeEdge();
-            }
-        } else if (boxID === '8') {
-            if ($('#7').hasClass('taken')) {
-                adjCorner = '9';
-            } else if ($('#9').hasClass('taken')) {
-                adjCorner = '7';
-            } else {
-                PlayOppositeEdge();
-            }
-        }
-        
-        computerSquaresArr.push(adjCorner);
-        $('#'+adjCorner).addClass('taken');
-        if (computerIcon === 'X') {
-            $('#'+adjCorner)
-                .children('.player-icon-x')
-                .delay(800)
-                .fadeIn(500);                    
+        if (boxCount === 1) {
+            // random corner on opening move
+            
+            console.log('random value for corner: ' + rand);
+            if (boxID === '2') {
+                if (rand < .499) {
+                    compNextMove = '1';
+                } else {
+                    compNextMove = '3';
+                }
+            } else if (boxID === '4') {
+                if (rand < .499) {
+                    compNextMove = '1';
+                } else {
+                    compNextMove = '7';
+                }
+            } else if (boxID === '6') {
+                if (rand < .499) {
+                    compNextMove = '3';
+                } else {
+                    compNextMove = '7';
+                }
+            } else if (boxID === '8') {
+                if (rand < .499) {
+                    compNextMove = '7';
+                } else {
+                    compNextMove = '9';
+                }
+            }    
         } else {
-            $('#'+adjCorner)
-                .children('.player-icon-o')
-                .delay(800)
-                .fadeIn(500);   
+            // specific corner or opposite edge on subsequent moves
+            if (boxID === '2') {
+                if (!$('#1').hasClass('taken')) {
+                    compNextMove = '1';
+                } else if (!$('#3').hasClass('taken')) {
+                    compNextMove = '3';
+                } else {
+                    compNextMove = PlayOppositeEdge();
+                }
+            } else if (boxID === '4') {
+                if ($('#1').hasClass('taken')) {
+                    compNextMove = '7';
+                } else if ($('#7').hasClass('taken')) {
+                    compNextMove = '1';
+                } else {
+                    compNextMove = PlayOppositeEdge();
+                }
+            } else if (boxID === '6') {
+                if ($('#3').hasClass('taken')) {
+                    compNextMove = '9';
+                } else if ($('#9').hasClass('taken')) {
+                    compNextMove = '3';
+                } else {
+                    compNextMove = PlayOppositeEdge();
+                }
+            } else if (boxID === '8') {
+                if ($('#7').hasClass('taken')) {
+                    compNextMove = '9';
+                } else if ($('#9').hasClass('taken')) {
+                    compNextMove = '7';
+                } else {
+                    compNextMove = PlayOppositeEdge();
+                }
+            }
         }
-        console.log("computer has played box #" + adjCorner + " (from PlayAdjCorner)");
-        boxCount++; 
-        console.log('boxCount is = ' + boxCount + ' and computer played last');
     };
     
     
@@ -426,9 +390,12 @@ $(document).ready(function(){
                 if (rand < .333) {
                     PlayCenter();
                 } else if (rand < .666) {
-                    compNextMove = PlayOppositeEdge();
+                    console.log('computer should play the Opposite Edge');
+                    //compNextMove = PlayOppositeEdge();
+                    PlayOppositeEdge();
                 } else {
-                    PlayRandAdjCorner();
+                    console.log('computer should play an adjacent corner');
+                    compNextMove = PlayAdjCorner();
                 }        
             }
             if (computerIcon === 'X') {P
@@ -459,7 +426,7 @@ $(document).ready(function(){
                     compNextMove = PlayAdjEdge(); 
                 // if the user plays an edge, respond with an adjacent available corner box
                 } else if ((boxID === '2') || (boxID === '4') || (boxID === '6') || (boxID === '8')) {
-                    PlayAdjCorner();
+                    compNextMove = PlayAdjCorner();
                 } else if (boxID === '5') {
                     PlayCorner();
                 }
