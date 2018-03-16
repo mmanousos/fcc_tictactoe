@@ -34,18 +34,24 @@ $(document).ready(function(){
         HideSelect();
     }); 
     
-  
-      
-    
     
   /* calculate which turn should be taken */
     const DeterminePlayer = function() {
         if (boxCount === 9 ) {
-            // display 'tied game' announcement 
-         // write script to display "tied game" announcement and reset game board   
+            // if userSquaresArr contains a winningPattern, display 'user-win' message
+          /*  if () {
+                $('#user-win').toggleClass('hidden'); */
+            // else if compSquaresArr contains winningPattern, display 'comp-win' message
+          /*  } else if () { 
+                $('#comp-win').toggleClass('hidden'); */       
+            // else display 'tied game' announcement 
+          /*  } else { */
+                $('#tied-game').toggleClass('hidden'); 
+            //}
+        // then clear the game board and display the message
             $('#game-board').toggleClass('hidden');
             $('#game-status').toggleClass('hidden');
-            $('#tied-game').toggleClass('hidden');
+            
         } else if (boxCount % 2 !== 0) {
             ComputerPlay();
         } else {
@@ -184,17 +190,33 @@ $(document).ready(function(){
             nextEdgePlay = '';
         
         if (boxID === '2') {
-            nextEdge = '8';
-            nextEdgePlay = '#8';
+            if (!$('#8').hasClass('taken')) {
+                nextEdge = '8';
+                nextEdgePlay = '#8';
+            } else {
+                PlayAdjCorner();
+            }
         } else if (boxID === '4') {
-            nextEdge = '6';
-            nextEdgePlay = '#6';
+            if (!$('#6').hasClass('taken')) {
+                nextEdge = '6';
+                nextEdgePlay = '#6';
+            } else {
+                PlayAdjCorner();
+            }
         } else if (boxID === '6') {
-            nextEdge = '4';
-            nextEdgePlay = '#4';
+            if (!$('#4').hasClass('taken')) {
+                nextEdge = '4';
+                nextEdgePlay = '#4';
+            } else {
+                PlayAdjCorner();
+            }
         } else if (boxID === '8') {
-            nextEdge = '2';
-            nextEdgePlay = '#2';
+            if (!$('#2').hasClass('taken')) {
+                nextEdge = '2';
+                nextEdgePlay = '#2';
+            } else {
+                PlayAdjCorner();
+            }
         }
         computerSquaresArr.push(nextEdge);
         $(nextEdgePlay).addClass('taken');
@@ -399,20 +421,31 @@ $(document).ready(function(){
     
     const BlockLogic = function () {
              // check if userSquaresArr contains the same values as any of the arrays in winningPatterns
-    // duplicate the winningPattern array currently checking. if userSquaresArr first value matches any value in that array, remove that value from the array, and check second value in userSquaresArr against remaining values in same array in winningPattern. 
+    // duplicate the winningPattern array currently checking (using .slice()). 
+    // if userSquaresArr first value matches any value in that array, remove that value from the array
+    // then check second value in userSquaresArr against remaining values in same array in winningPattern. 
     // if an additional value matches, remove that value.
-    //return the remaining value for the computer to play. 
-        var i = 0;
+    // return the remaining value for the computer to play. 
+    // if none of the moves match a winningPattern, select a random untaken box to play? (or go for winning move)    
+        // usArr is short for userSquaresArr
+        // wp is short for winningPatterns
+        
+        // usArrPos is position within userSquaresArr 
+        // wpPos is position within winningPatterns (to fecth subArray)
+        // wpSubArrPos is position within winningPatterns 
+        // wpCurVal is value within winningPatterns subArray 
+        
+        var usArrPos = 0;
 
-        for (var j = 0; j < winningPatterns.length; j++ ) { 
-            if (i >= userSquaresArr.length) { 
-              i = 0; 
+        for (var wpVal = 0; wpVal < winningPatterns.length; wpVal++ ) { 
+            if (usArrPos >= userSquaresArr.length) { 
+              usArrPos = 0; 
             }
-            var checkWP = winningPatterns[j];
-            console.log("WinningPattern " + j + ": " + checkWP);
-            var l = 0;
-            for (var k = 0; k <= winningPatterns[l].length; k++ ) {
-                var userValue = userSquaresArr[i],
+            var checkWP = winningPatterns[wpVal].slice(); 
+            console.log("WinningPattern " + wpVal + ": " + checkWP);
+            var wpPos = 0;
+            for (var wpCurVal = 0; wpCurVal <= winningPatterns[wpPos].length; wpCurVal++ ) {
+                var userValue = userSquaresArr[usArrPos],
                     valPresent = checkWP.indexOf(userValue, 0);
                 console.log("user has played " + userSquaresArr);
                 console.log(userValue + " is current UserValue");
@@ -420,16 +453,20 @@ $(document).ready(function(){
                     checkWP.splice(valPresent, 1);
                     var checkWPleng = checkWP.length;    
                     console.log("the userValue is present in the current winningPattern at position " + valPresent)
-                    i++; 
+                    usArrPos++; 
                     console.log("length of checkWP:" + checkWP.length);
                     if (checkWPleng < 2) {
-                        compNextMove = checkWP[0];
+                        var compNextMove = checkWP[0];
                         console.log("computer's next move should be " + compNextMove);
                         return compNextMove;
                     }
                 } else if (valPresent == -1) { 
-                  i++; 
-                } 
+                  usArrPos++; 
+                } /* else {  // if the user hasn't played any of the winning combinations
+                    // select random untaken box
+                    /* cycle through 1-9 until find one not in userSquaresArr or compSquaresArr? */
+                    /* merge both & then check? 
+                } */
             };
         };
     }
@@ -457,7 +494,7 @@ $(document).ready(function(){
         } else if (boxCount >= 3) {
             //compNextMove = BlockLogic();
             // Lucas's alteration now isn't working and my original script for this function works fine. Very bizarre.
-            BlockLogic();
+            compNextMove = BlockLogic();
           
             console.log("Computer's next move: " + compNextMove);
             if ($('#'+compNextMove).hasClass('taken')) {

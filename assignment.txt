@@ -92,24 +92,7 @@ if user plays edge,
     * need to figure out how it will know where to block. 
         have AI check "userSquaresArr" for specific patterns
         
-    two in a row = 
-    1, 2
-    2, 3
-    4, 5
-    5, 6
-    7, 8
-    8, 9
-    1, 4
-    4, 7
-    2, 5
-    5, 8
-    3, 6
-    6, 9
-    1, 5
-    3, 5
-    7, 5
-    9, 5
-     if userSquaresArr contains any of these combinations, computer needs to block them in the remaining space.
+    * Need AI to check if it has a chance to win based on contents of compSquaresArr (borrow from logic of BlockLogic; but is there a way to get the winningPatterns arrays not to degrade so they can be checked within the separate functions?)
      
      
      winning patterns: 
