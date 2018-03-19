@@ -238,25 +238,25 @@ $(document).ready(function(){
                 if (!$('#8').hasClass('taken')) {
                     compNextMove = '8';
                 } else {
-                    compNextMove = PlayAdjCorner();
+                    compNextMove = PlayCorner();
                 }
             } else if (boxID === '4') {
                 if (!$('#6').hasClass('taken')) {
                     compNextMove = '6';
                 } else {
-                    compNextMove = PlayAdjCorner();
+                    compNextMove = PlayCorner();
                 }
             } else if (boxID === '6') {
                 if (!$('#4').hasClass('taken')) {
                     compNextMove = '4';
                 } else {
-                    compNextMove = PlayAdjCorner();
+                    compNextMove = PlayCorner();
                 }
             } else if (boxID === '8') {
                 if (!$('#2').hasClass('taken')) {
                     compNextMove = '2';
                 } else {
-                    compNextMove = PlayAdjCorner();
+                    compNextMove = PlayCorner();
                 }
             }
         }
@@ -410,7 +410,7 @@ $(document).ready(function(){
         console.log("user played = " + boxID + ' (from ComputerPlay function)');
         console.log('there are ' + boxCount + ' squares filled (from ComputerPlay function)');
             //computer plays
-        if (boxCount < 2) {
+        if (boxCount === 1) {
             if (boxID === '5') {
                 compNextMove = PlayCorner();
             } else if ((boxID === '1') || (boxID === '3') || (boxID === '7') || (boxID === '9')) {
