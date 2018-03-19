@@ -320,7 +320,7 @@ $(document).ready(function(){
             var wpPos = 0;
             for (var wpCurVal = 0; wpCurVal <= winningPatterns[wpPos].length; wpCurVal++ ) {
                 var userValue = userSquaresArr[usArrPos],
-                    valPresent = checkWP.indexOf(userValue, 0);
+                    valPresent = checkWP.indexOf(userValue, 0); // check if the userValue is present in the winningPattern subarray
                 console.log("user has played " + userSquaresArr);
                 console.log(userValue + " is current UserValue");
                 if (valPresent > -1) {
@@ -332,11 +332,12 @@ $(document).ready(function(){
                     if (checkWPleng < 2) {
                         compNextMove = checkWP[0];
                         console.log("computer's next move should be " + compNextMove);
-                      /*  if ($('#'+compNextMove).hasClass('taken')) {
-                            // go to next subarray in WP and continue checking against possible blocks (wpPos) 
-                        } else { */
+                        if ($('#'+compNextMove).hasClass('taken')) {
+                            // go to next subarray in WP and continue checking against possible blocks (wpVal)
+                            wpVal++;
+                        } else { 
                             return compNextMove;
-                    //    }
+                        }
                     }
                 } else if (valPresent == -1) { 
                   usArrPos++; 
@@ -388,11 +389,15 @@ $(document).ready(function(){
                     if (checkWPleng < 2) {
                         compNextMove = checkWP[0];
                         console.log("computer's next move to win should be " + compNextMove);
-                      /*  if ($('#'+compNextMove).hasClass('taken')) {
-                            // go to next subarray in WP and continue checking against possible blocks (wpPos) 
-                        } else { */
+                        if ($('#'+compNextMove).hasClass('taken')) {
+                            // go to next subarray in WP and continue checking against possible wins (wpVal) 
+                            wpVal++;
+                            if (wpVal === winningPatterns.length) {
+                                break;
+                            }
+                        } else { 
                             return compNextMove;
-                    //    }
+                        }
                     }
                 } else if (valPresent == -1) { 
                   csArrPos++; 
@@ -424,33 +429,23 @@ $(document).ready(function(){
                 } else {
                     PlayCorner();
                 }        
-            }
-            if (computerIcon === 'X') {P
-                $('#'+compNextMove)
-                    .children('.player-icon-x')
-                    .delay(800)
-                    .fadeIn(500);                                    
-            } else {
-                $('#'+compNextMove)
-                    .children('.player-icon-o')
-                    .delay(800)
-                    .fadeIn(500);  
-            }
-            $('#'+compNextMove).addClass('taken');    
-            compSquaresArr.push(compNextMove);
-            console.log("computer has played box #" + compNextMove);
-            boxCount++;
-            console.log('boxCount is = ' + boxCount + ' and computer played last');
-            
-        } else if (boxCount >= 3) {
+            }            
+        } 
+        else if (boxCount >= 3) {
             if (boxCount === 3) {
                 compNextMove = BlockLogic();
             } else if (boxCount > 3) {
-                compNextMove = WinLogic();
+                WinLogic();
+                if ($('#'+compNextMove).hasClass('taken')) {
+                    console.log("the move suggested by WinLogic " + compNextMove + " is taken. Calculating block.")
+                    compNextMove = BlockLogic();
+                } else { 
+                    console.log("computer's next move can go in box " + compNextMove + " because it's not taken");
+                }
             }
           
-            console.log("Computer's next move: " + compNextMove);
-            if ($('#'+compNextMove).hasClass('taken')) {
+        //    console.log("Computer's next move: " + compNextMove);
+         /*   if ($('#'+compNextMove).hasClass('taken')) {
                 console.log("the move suggested by BlockLogic " + compNextMove + " is taken. Recalculating.")
                 // if the user plays a corner, respond with an adjacent available edge box
                 if ((boxID === '1') || (boxID === '3') || (boxID === '7') || (boxID === '9')) {
@@ -460,28 +455,26 @@ $(document).ready(function(){
                     compNextMove = PlayCorner();
                 } else if (boxID === '5') {
                     PlayCorner();
-                }
-            } else {    
-                console.log("computer's next move can go in box " + compNextMove + " because it's not taken");
-                if (computerIcon === 'X') {
-                    $('#'+compNextMove)
-                        .children('.player-icon-x')
-                        .delay(800)
-                        .fadeIn(500);                                    
-                } else {
-                    $('#'+compNextMove)
-                        .children('.player-icon-o')
-                        .delay(800)
-                        .fadeIn(500);  
-                }
-            $('#'+compNextMove).addClass('taken');    
-            compSquaresArr.push(compNextMove);
-            console.log("computer has played box #" + compNextMove);
-            boxCount++;
-            console.log('boxCount is = ' + boxCount + ' and computer played last');
+                } */
+            //}
+            //else {    
             }
-        }   
-    };
-
+        if (computerIcon === 'X') {P
+            $('#'+compNextMove)
+                .children('.player-icon-x')
+                .delay(800)
+                .fadeIn(500);                                    
+        } else {
+            $('#'+compNextMove)
+                .children('.player-icon-o')
+                .delay(800)
+                .fadeIn(500);  
+        }
+        $('#'+compNextMove).addClass('taken');    
+        compSquaresArr.push(compNextMove);
+        console.log("computer has played box #" + compNextMove);
+        boxCount++;
+        console.log('boxCount is = ' + boxCount + ' and computer played last');
+    };   
 });
 
