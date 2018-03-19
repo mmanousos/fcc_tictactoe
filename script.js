@@ -4,6 +4,10 @@ $(document).ready(function(){
         userSquaresArr = [],
         compSquaresArr = [],
         rand = Math.random(),
+        /* for determining random next move */ 
+        totalSquares = [],
+        possibleSquares = ['1', '2', '3', '4', '5', '6', '7', '8', '9'],
+        /* end random next move variables */
         compNextMove = '',
         boxID = '',
         boxCount = 0, 
@@ -16,6 +20,11 @@ $(document).ready(function(){
                            ['1', '5', '9'], 
                            ['3', '5', '7']];
     
+    
+  /* helper function to sort arrays in ascending order */     
+    const Ascending = function ( a, b ) {
+            return a - b;
+    }     
     
   /* hide selection board & display game board */   
     const HideSelect = function() {
@@ -293,6 +302,36 @@ $(document).ready(function(){
     };
        
     
+    const RandomPlay = function () {
+        //select random untaken box
+        /* cycle through 1-9 until find one not in userSquaresArr or compSquaresArr */
+        /* merge both & then check */
+    
+        totalSquares = userSquaresArr.concat(compSquaresArr);
+        totalSquares.sort( Ascending ); 
+        console.log('all squares played to this point are: ' + totalSquares);
+
+        for (var num = 0; num <= possibleSquares.length; num++) {
+            var isPres = possibleSquares[num],
+                valPresentTotal = totalSquares.indexOf(isPres, 0);
+            if (valPresentTotal > -1) {
+                num++;
+            } else {
+                compNextMove = num; 
+                console.log('next random move should be ' + compNextMove);
+                if ($('#'+compNextMove).hasClass('taken')) {
+                    // go to next value in possibleSquares
+                    num++;
+                } else { 
+                    return compNextMove;
+                    break;
+                }
+                // return compNextMove;
+                
+            } 
+        }
+    }; 
+    
     const BlockLogic = function () {
              // check if userSquaresArr contains the same values as any of the arrays in winningPatterns
     // duplicate the winningPattern array currently checking (using .slice()). 
@@ -306,22 +345,22 @@ $(document).ready(function(){
         
         // usArrPos is position within userSquaresArr 
         // wpPos is position within winningPatterns (to fecth subArray)
-        // wpSubArrPos is position within winningPatterns 
+        // wpVal is position within winningPatterns (subArray itself)
         // wpCurVal is value within winningPatterns subArray 
         
         var usArrPos = 0;
-
+        userSquaresArr = userSquaresArr.sort(Ascending);
         for (var wpVal = 0; wpVal < winningPatterns.length; wpVal++ ) { 
             if (usArrPos >= userSquaresArr.length) { 
               usArrPos = 0; 
             }
             var checkWP = winningPatterns[wpVal].slice(); 
-            console.log("WinningPattern " + wpVal + ": " + checkWP);
+            console.log("* WinningPattern " + wpVal + ": " + checkWP);
+            console.log("user has played " + userSquaresArr);
             var wpPos = 0;
-            for (var wpCurVal = 0; wpCurVal <= winningPatterns[wpPos].length; wpCurVal++ ) {
+            for (var wpCurVal = 0; wpCurVal <= winningPatterns[wpPos].length - 1; wpCurVal++ ) {
                 var userValue = userSquaresArr[usArrPos],
                     valPresent = checkWP.indexOf(userValue, 0); // check if the userValue is present in the winningPattern subarray
-                console.log("user has played " + userSquaresArr);
                 console.log(userValue + " is current UserValue");
                 if (valPresent > -1) {
                     checkWP.splice(valPresent, 1);
@@ -340,12 +379,15 @@ $(document).ready(function(){
                         }
                     }
                 } else if (valPresent == -1) { 
-                  usArrPos++; 
-                } /* else {  // if the user hasn't played any of the winning combinations
-                    // select random untaken box
-                    /* cycle through 1-9 until find one not in userSquaresArr or compSquaresArr? */
-                    /* merge both & then check? 
-                } */
+                    usArrPos++; 
+                    if (wpVal === winningPatterns.length -1) {
+                        console.log("wpVal is: " + wpVal);
+                        wpVal++; 
+                        console.log("none of the moves played so far are within a winning pattern so block randomly");
+                        compNextMove = RandomPlay();
+                        return compNextMove;
+                    }
+                } 
             };
         };
     }
@@ -363,7 +405,7 @@ $(document).ready(function(){
         
         // csArrPos is position within compSquaresArr 
         // wpPos is position within winningPatterns (to fecth subArray)
-        // wpSubArrPos is position within winningPatterns 
+        // wpVal is position within winningPatterns (subArray itself)
         // wpCurVal is value within winningPatterns subArray 
         
         var csArrPos = 0;
@@ -375,7 +417,7 @@ $(document).ready(function(){
             var checkWP = winningPatterns[wpVal].slice(); 
             console.log("WinningPattern " + wpVal + ": " + checkWP);
             var wpPos = 0;
-            for (var wpCurVal = 0; wpCurVal <= winningPatterns[wpPos].length; wpCurVal++ ) {
+            for (var wpCurVal = 0; wpCurVal <= winningPatterns[wpPos].length - 1; wpCurVal++ ) {
                 var compValue = compSquaresArr[csArrPos],
                     valPresent = checkWP.indexOf(compValue, 0);
                 console.log("computer has played " + compSquaresArr);
@@ -438,7 +480,7 @@ $(document).ready(function(){
                 WinLogic();
                 if ($('#'+compNextMove).hasClass('taken')) {
                     console.log("the move suggested by WinLogic " + compNextMove + " is taken. Calculating block.")
-                    compNextMove = BlockLogic();
+                    BlockLogic();
                 } else { 
                     console.log("computer's next move can go in box " + compNextMove + " because it's not taken");
                 }
@@ -477,4 +519,3 @@ $(document).ready(function(){
         console.log('boxCount is = ' + boxCount + ' and computer played last');
     };   
 });
-
