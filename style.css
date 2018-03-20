@@ -84,6 +84,10 @@ body {
     margin: 30px 0 15px 0;
 }
 
+.status-display {
+    margin: 30px 0 15px 0;
+}
+
 #user-win {
     color: #B53CB5;
 }
@@ -94,7 +98,6 @@ body {
 
 #tied-game {
     color: #57209F;
-    background-color: rgba(255, 255, 255, 0);
 }
 
 .again {
