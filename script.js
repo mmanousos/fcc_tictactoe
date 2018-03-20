@@ -3,6 +3,8 @@ $(document).ready(function(){
         computerIcon = '', 
         userSquaresArr = [],
         compSquaresArr = [],
+        usArrLen = userSquaresArr.length,
+        csArrLen = compSquaresArr.length,
         rand = Math.random(),
         /* for determining random next move */ 
         totalSquares = [],
@@ -21,7 +23,7 @@ $(document).ready(function(){
                            ['3', '5', '7']];
     
     
-  /* helper function to sort arrays in ascending order */     
+  /* helper function to sort arrays in ascending order - not really necessary*/     
     const Ascending = function ( a, b ) {
             return a - b;
     }     
@@ -45,6 +47,83 @@ $(document).ready(function(){
         HideSelect();
     }); 
     
+
+  /* check if user won */ 
+    const UserWin = function() {
+        var usArrPos = 0;
+        userSquaresArr = userSquaresArr.sort(Ascending);
+        for (var wpVal = 0; wpVal < winningPatterns.length; wpVal++ ) { 
+            if (usArrPos >= usArrLen) { 
+              usArrPos = 0; 
+            }
+            var checkWP = winningPatterns[wpVal].slice(); 
+            console.log("* WinningPattern " + wpVal + ": " + checkWP);
+            console.log("user has played " + userSquaresArr);
+            var wpPos = 0;    
+            for (var wpCurVal = 0; wpCurVal <= winningPatterns[wpPos].length - 1; wpCurVal++ ) {
+                var userValue = userSquaresArr[usArrPos],
+                    valPresent = checkWP.indexOf(userValue, 0); // check if the userValue is present in the winningPattern subarray
+                console.log(userValue + " is current UserValue");
+                if (valPresent > -1) {
+                    checkWP.splice(valPresent, 1); // if present, remove it from the wp subarray
+                    var checkWPleng = checkWP.length;    
+                    console.log("the userValue is present in the current winningPattern at position " + valPresent)
+                    usArrPos++; 
+                    console.log("length of checkWP:" + checkWP.length);
+                    if (checkWPleng < 1) { // if the wp subarray is empty
+                        console.log('the user has played a winningPattern');
+                        return true; // create a 'true' value to return? 
+                    }
+                } else if (valPresent == -1) { 
+                    usArrPos++; 
+                    // not sure this part is necessary 
+                    if (wpVal === winningPatterns.length -1) {
+                        console.log("wpVal is: " + wpVal);
+                        return false;
+                    }
+                } 
+            }
+        }
+    }
+    
+  /* check if computer won */ 
+    const CompWin = function() {
+        var csArrPos = 0;
+        compSquaresArr = compSquaresArr.sort(Ascending);
+        for (var wpVal = 0; wpVal < winningPatterns.length; wpVal++ ) { 
+            if (csArrPos >= csArrLen) { 
+              csArrPos = 0; 
+            }
+            var checkWP = winningPatterns[wpVal].slice(); 
+            console.log("* WinningPattern " + wpVal + ": " + checkWP);
+            console.log("computer has played " + compSquaresArr);
+            var wpPos = 0;    
+            for (var wpCurVal = 0; wpCurVal <= winningPatterns[wpPos].length - 1; wpCurVal++ ) {
+                var compValue = compSquaresArr[csArrPos],
+                    valPresent = checkWP.indexOf(compValue, 0); // check if the userValue is present in the winningPattern subarray
+                console.log(compValue + " is current CompValue");
+                if (valPresent > -1) {
+                    checkWP.splice(valPresent, 1); // if present, remove it from the wp subarray
+                    var checkWPleng = checkWP.length;    
+                    console.log("the userValue is present in the current winningPattern at position " + valPresent)
+                    csArrPos++; 
+                    console.log("length of checkWP:" + checkWP.length);
+                    if (checkWPleng < 1) { // if the wp subarray is empty
+                        console.log('the computer has played a winningPattern');
+                        return true; // create a 'true' value to return? 
+                    }
+                } else if (valPresent == -1) { 
+                    csArrPos++; 
+                    // not sure this part is necessary 
+                    if (wpVal === winningPatterns.length -1) {
+                        console.log("wpVal is: " + wpVal);
+                        return false;
+                    }
+                } 
+            }
+        }
+    }
+    
     
   /* calculate which turn should be taken & if game is over */
     const DeterminePlayer = function() {
@@ -64,11 +143,13 @@ $(document).ready(function(){
             $('#game-status').toggleClass('hidden');
             
         } else if (boxCount % 2 !== 0) {
+            // check if player won first, if no, then 
             ComputerPlay();
         } else {
+            // check if computer won, if no, then     
             console.log("It's the user's turn.");
-        }
-    }  
+        }      
+    }     
     
     
   /* 'Play Again' button - resets game */    
@@ -501,7 +582,7 @@ $(document).ready(function(){
             //}
             //else {    
             }
-        if (computerIcon === 'X') {P
+        if (computerIcon === 'X') {
             $('#'+compNextMove)
                 .children('.player-icon-x')
                 .delay(800)
@@ -517,5 +598,6 @@ $(document).ready(function(){
         console.log("computer has played box #" + compNextMove);
         boxCount++;
         console.log('boxCount is = ' + boxCount + ' and computer played last');
+        DeterminePlayer();
     };   
 });
