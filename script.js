@@ -63,7 +63,7 @@ $(document).ready(function(){
             console.log("* WinningPattern " + wpVal + ": " + checkWP);
             console.log("user has played " + userSquaresArr);
             var wpPos = 0;    
-            for (var wpCurVal = 0; wpCurVal <= winningPatterns[wpPos].length - 1; wpCurVal++ ) {
+            for (var wpCurVal = 0; wpCurVal <= winningPatterns[wpPos].length; wpCurVal++ ) {
                 var userValue = userSquaresArr[usArrPos],
                     valPresent = checkWP.indexOf(userValue, 0); // check if the userValue is present in the winningPattern subarray
                 console.log(userValue + " is current UserValue");
@@ -101,7 +101,7 @@ $(document).ready(function(){
             console.log("* WinningPattern " + wpVal + ": " + checkWP);
             console.log("computer has played " + compSquaresArr);
             var wpPos = 0;    
-            for (var wpCurVal = 0; wpCurVal <= winningPatterns[wpPos].length - 1; wpCurVal++ ) {
+            for (var wpCurVal = 0; wpCurVal <= winningPatterns[wpPos].length; wpCurVal++ ) {
                 var compValue = compSquaresArr[csArrPos],
                     valPresent = checkWP.indexOf(compValue, 0); // check if the userValue is present in the winningPattern subarray
                 console.log(compValue + " is current CompValue");
@@ -111,9 +111,9 @@ $(document).ready(function(){
                     console.log("the userValue is present in the current winningPattern at position " + valPresent)
                     csArrPos++; 
                     console.log("length of checkWP:" + checkWP.length);
-                    if (checkWPleng < 1) { // if the wp subarray is empty
+                    if (checkWPleng === 0) { // if the wp subarray is empty
                         console.log('the computer has played a winningPattern');
-                        return true; // create a 'true' value to return? 
+                        return true; 
                     }
                 } else if (valPresent == -1) { 
                     csArrPos++; 
@@ -512,7 +512,7 @@ $(document).ready(function(){
         var usArrPos = 0;
         userSquaresArr = userSquaresArr.sort(Ascending);
         for (var wpVal = 0; wpVal < winningPatterns.length; wpVal++ ) { 
-            if (usArrPos >= userSquaresArr.length) { 
+            if (usArrPos >= usArrLen) { 
               usArrPos = 0; 
             }
             var checkWP = winningPatterns[wpVal].slice(); 
@@ -572,7 +572,7 @@ $(document).ready(function(){
         var csArrPos = 0;
 
         for (var wpVal = 0; wpVal < winningPatterns.length; wpVal++ ) { 
-            if (csArrPos >= userSquaresArr.length) { 
+            if (csArrPos >= csArrLen) { 
               csArrPos = 0; 
             }
             var checkWP = winningPatterns[wpVal].slice(); 
