@@ -146,14 +146,12 @@ $(document).ready(function(){
                 $('#tied-game').toggleClass('hidden').addClass('displayed'); 
             }
         // then clear the game board and display the message
-            $('#game-board').toggleClass('hidden');
             $('#game-status').toggleClass('hidden');
             
         } else if (boxCount % 2 !== 0) {
             // check if player won first, if no, then 
             if (userWin === true) {
                 $('#user-win').toggleClass('hidden').addClass('displayed');
-                $('#game-board').toggleClass('hidden');
                 $('#game-status').toggleClass('hidden');
             } else {
                 ComputerPlay();
@@ -162,7 +160,6 @@ $(document).ready(function(){
             // check if computer won, if no, then     
             if (compWin === true) {
                 $('#comp-win').toggleClass('hidden').addClass('displayed');
-                $('#game-board').toggleClass('hidden');
                 $('#game-status').toggleClass('hidden');
             } else {
                 console.log("It's the user's turn.");
@@ -184,7 +181,9 @@ $(document).ready(function(){
         } 
         // display the game-select choice box
         $('#game-select').removeClass('hidden'); 
-        // hide the game-status display
+        // hide the game board 
+        $('#game-board').toggleClass('hidden');
+        // hide the game-status display (winner status)
         $('#game-status').toggleClass('hidden');
         // rehide 'tied game' notification to ready for subsequent games
         if (boxCount === 9) { 
@@ -192,7 +191,7 @@ $(document).ready(function(){
                 $('#tied-game').toggleClass('hidden').removeClass('displayed'); ;
             } else if ($('#comp-win').hasClass('displayed')) {
                 $('#comp-win').toggleClass('hidden').removeClass('displayed'); 
-            } else {
+            } else if ($('#user-win').hasClass('displayed')) {
                 $('#user-win').toggleClass('hidden').removeClass('displayed'); 
             }
         }
