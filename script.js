@@ -126,45 +126,103 @@ $(document).ready(function(){
             }
         }
     }
-    
+   
+  /* check for winners */      
+    const CheckWinners = function() {
+        userWin = UserWin(); 
+        compWin = CompWin(); 
+        console.log("userWin: " + userWin + " and compWin: " + compWin);
+        if (userWin === true) {
+            return userWin;
+        } else if (compWin === true) { 
+            return compWin;
+        } 
+    }
     
   /* calculate which turn should be taken & if game is over */
     const DeterminePlayer = function() {
-        userWin = UserWin(); 
-        compWin = CompWin();            
-        if (boxCount === 9) {
-            // if userSquaresArr contains a winningPattern, display 'user-win' message
-            userWin = UserWin(); 
-            compWin = CompWin();            
-            if (userWin === true) {
-                $('#user-win').toggleClass('hidden').addClass('displayed'); 
-            // else if compSquaresArr contains winningPattern, display 'comp-win' message
-            } else if (compWin === true) { 
-                $('#comp-win').toggleClass('hidden').addClass('displayed');        
-            // else display 'tied game' announcement 
-            } else if ((userWin !== true) && (compWin!== true)) { 
-                $('#tied-game').toggleClass('hidden').addClass('displayed'); 
-            }
-        // then clear the game board and display the message
-            $('#game-status').toggleClass('hidden');
-            
-        } else if (boxCount % 2 !== 0) {
-            // check if player won first, if no, then 
-            if (userWin === true) {
-                $('#user-win').toggleClass('hidden').addClass('displayed');
-                $('#game-status').toggleClass('hidden');
+        if (boxCount % 2 !== 0) {
+            if (boxCount === 9) {
+                CheckWinners();
+                if (userWin === true) {
+                    console.log("user wins!");
+                    $('#user-win').toggleClass('hidden').addClass('displayed'); 
+                    $('#game-status').toggleClass('hidden');
+                } else if (compWin === true) { 
+                    console.log("computer wins!");
+                    $('#comp-win').toggleClass('hidden').addClass('displayed'); 
+                    $('#game-status').toggleClass('hidden');
+                } else if ((userWin !== true) && (compWin!== true)) { 
+                    console.log("it's a tie!");
+                    $('#tied-game').toggleClass('hidden').addClass('displayed'); 
+                    $('#game-status').toggleClass('hidden');
+                }
+            } else if (boxCount >= 5) {
+                // check if there is a winner
+                CheckWinners();
+                if ((userWin !== true) && (compWin !== true)) { // if neither have won
+                    ComputerPlay();
+                }
             } else {
+                console.log("computer's turn");
                 ComputerPlay();
             }
         } else {
-            // check if computer won, if no, then     
-            if (compWin === true) {
-                $('#comp-win').toggleClass('hidden').addClass('displayed');
-                $('#game-status').toggleClass('hidden');
+            if (boxCount >=5) {
+                // check if there is a winner
+                CheckWinners();
+                if (userWin === true) {
+                    console.log("user wins!");
+                    $('#user-win').toggleClass('hidden').addClass('displayed'); 
+                    $('#game-status').toggleClass('hidden');
+                } else if (compWin === true) {
+                    console.log("computer wins!");
+                    $('#comp-win').toggleClass('hidden').addClass('displayed'); 
+                    $('#game-status').toggleClass('hidden');
+                }
             } else {
-                console.log("It's the user's turn.");
+            console.log("It's the user's turn.");
             }
-        }      
+        }
+        
+        
+  /*      if (boxCount >= 5) {
+            userWin = UserWin(); 
+            compWin = CompWin();            
+            if (boxCount === 9) {
+                // if userSquaresArr contains a winningPattern, display 'user-win' message           
+                if (userWin === true) {
+                    $('#user-win').toggleClass('hidden').addClass('displayed'); 
+                // else if compSquaresArr contains winningPattern, display 'comp-win' message
+                } else if (compWin === true) { 
+                    $('#comp-win').toggleClass('hidden').addClass('displayed');        
+                // else display 'tied game' announcement 
+                } else if ((userWin !== true) && (compWin!== true)) { 
+                    $('#tied-game').toggleClass('hidden').addClass('displayed'); 
+                }
+            // then clear the game board and display the message
+                $('#game-status').toggleClass('hidden');
+
+            } else if (boxCount % 2 !== 0) {
+                // check if player won first, if no, then 
+                if (userWin === true) {
+                    $('#user-win').toggleClass('hidden').addClass('displayed');
+                    $('#game-status').toggleClass('hidden');
+                } else {
+                    ComputerPlay();
+                }
+            } else {
+                // check if computer won, if no, then     
+                if (compWin === true) {
+                    $('#comp-win').toggleClass('hidden').addClass('displayed');
+                    $('#game-status').toggleClass('hidden');
+                } else {
+                    console.log("It's the user's turn.");
+                }
+            }  
+        } else {
+            ComputerPlay();
+        } */
     }     
     
     
@@ -221,11 +279,11 @@ $(document).ready(function(){
             if (userIcon === 'X') {
                 $(this)
                     .children('.player-icon-x')
-                    .fadeIn(500);
+                    .fadeIn(300);
             } else {
                 $(this)
                     .children('.player-icon-o')
-                    .fadeIn(500);            
+                    .fadeIn(300);            
             }
             $(this).addClass('taken');
             boxCount++; 
@@ -562,7 +620,8 @@ $(document).ready(function(){
             //computer plays
         if (boxCount === 1) {
             if (boxID === '5') {
-                compNextMove = PlayCorner();
+                //compNextMove = PlayCorner();
+                PlayCorner();
             } else if ((boxID === '1') || (boxID === '3') || (boxID === '7') || (boxID === '9')) {
                 PlayCenter(); 
             } else if ((boxID === '2') || (boxID === '4') || (boxID === '6') || (boxID === '8')) {
