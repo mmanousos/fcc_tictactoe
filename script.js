@@ -142,7 +142,7 @@ $(document).ready(function(){
             } else if (compWin === true) { 
                 $('#comp-win').toggleClass('hidden').addClass('displayed');        
             // else display 'tied game' announcement 
-            } else { 
+            } else if ((userWin !== true) && (compWin!== true)) { 
                 $('#tied-game').toggleClass('hidden').addClass('displayed'); 
             }
         // then clear the game board and display the message
@@ -169,8 +169,8 @@ $(document).ready(function(){
     
     
   /* 'Play Again' button - resets game */    
-    //$('#again').on('click', Reset());
     $('#again').on('click', function() {
+        console.log("### RESET");
         // remove display of player markers
         if ($('.boxes').hasClass('taken')) {
             $('.boxes img').fadeOut(500);
@@ -188,8 +188,14 @@ $(document).ready(function(){
         // rehide 'tied game' notification to ready for subsequent games
         if (boxCount === 9) { 
             if ($('#tied-game').hasClass('displayed')) {
-                $('#tied-game').toggleClass('hidden').removeClass('displayed'); ;
+                $('#tied-game').toggleClass('hidden').removeClass('displayed');
             } else if ($('#comp-win').hasClass('displayed')) {
+                $('#comp-win').toggleClass('hidden').removeClass('displayed'); 
+            } else if ($('#user-win').hasClass('displayed')) {
+                $('#user-win').toggleClass('hidden').removeClass('displayed'); 
+            }
+        } else {
+            if ($('#comp-win').hasClass('displayed')) {
                 $('#comp-win').toggleClass('hidden').removeClass('displayed'); 
             } else if ($('#user-win').hasClass('displayed')) {
                 $('#user-win').toggleClass('hidden').removeClass('displayed'); 
@@ -601,13 +607,13 @@ $(document).ready(function(){
         if (computerIcon === 'X') {
             $('#'+compNextMove)
                 .children('.player-icon-x')
-                .delay(800)
-                .fadeIn(500);                                    
+                .delay(300)
+                .fadeIn(300);                                    
         } else {
             $('#'+compNextMove)
                 .children('.player-icon-o')
-                .delay(800)
-                .fadeIn(500);  
+                .delay(300)
+                .fadeIn(300);  
         }
         $('#'+compNextMove).addClass('taken');    
         compSquaresArr.push(compNextMove);
