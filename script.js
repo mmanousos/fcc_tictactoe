@@ -454,8 +454,14 @@ $(document).ready(function(){
                         compNextMove = checkWP[0];
                         console.log("computer's next move should be " + compNextMove);
                         if ($('#'+compNextMove).hasClass('taken')) {
+                            console.log(compNextMove + " is taken. Checking additional available.")
                             // go to next subarray in WP and continue checking against possible blocks (wpVal)
                             wpVal++;
+                            if (wpVal >= winningPatterns.length) {
+                                console.log("there are no additional appropriate blocks");
+                                compNextMove = RandomPlay();
+                                return compNextMove;    
+                            }
                         } else { 
                             return compNextMove;
                         }
