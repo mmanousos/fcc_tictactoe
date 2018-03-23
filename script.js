@@ -116,13 +116,21 @@ $(document).ready(function(){
                 CheckWinners();
                 if ((userWin !== true) && (compWin !== true)) { // if neither have won
                     ComputerPlay();
+                } else if (userWin === true) {
+                    console.log("user wins!");
+                    $('#user-win').toggleClass('hidden').addClass('displayed'); 
+                    $('#game-status').toggleClass('hidden');
+                } else if (compWin === true) { 
+                    console.log("computer wins!");
+                    $('#comp-win').toggleClass('hidden').addClass('displayed'); 
+                    $('#game-status').toggleClass('hidden');
                 }
             } else {
                 console.log("computer's turn");
                 ComputerPlay();
             }
         } else {
-            if (boxCount >=5) {
+            if (boxCount >=6) {
                 // check if there is a winner
                 CheckWinners();
                 if (userWin === true) {
