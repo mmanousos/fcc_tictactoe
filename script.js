@@ -34,6 +34,7 @@ $(document).ready(function(){
   /* hide selection board & display game board */   
     const HideSelect = function() {
         $('.game-board').toggleClass('hidden');
+        $('#indicator').toggleClass('hidden');
         $('#game-select').addClass('hidden');
     } 
 
@@ -42,14 +43,35 @@ $(document).ready(function(){
         userIcon = 'X';
         computerIcon = 'O';
         HideSelect();
+        $('#x-turn').toggleClass('hidden').addClass('shown');
+        console.log('display X');
     });   
     
     $( '#circle' ).on('click', function() {
         userIcon = 'O';
         computerIcon = 'X';
         HideSelect();
+        $('#o-turn').toggleClass('hidden').addClass('shown');
+        console.log('display O');
     }); 
     
+    const Marker = function () {
+        if (boxCount % 2 !== 0 ) { // computer's marker
+            console.log("computer's marker should show");
+            if (userIcon == 'X') {
+                $('#x-turn').fadeOut(300).removeClass('shown');
+            } else if (userIcon = 'O') {
+                $('#o-turn').fadeOut(300).removeClass('shown');
+            }
+        } else { // user's marker
+            console.log("user's marker should show");
+            if (userIcon == 'X') {
+                $('#x-turn').fadeIn(500).addClass('shown');
+            } else if (userIcon = 'O') {
+                $('#o-turn').fadeIn(500).addClass('shown');
+            }
+        }
+    }
 
   /* check if user won */ 
     const UserWins = function () {
@@ -95,6 +117,7 @@ $(document).ready(function(){
     
   /* calculate which turn should be taken & if game is over */
     const DeterminePlayer = function() {
+        Marker();
         if (boxCount % 2 !== 0) {
             if (boxCount === 9) {
                 CheckWinners();
@@ -144,6 +167,7 @@ $(document).ready(function(){
                 }
             } else {
             console.log("It's the user's turn.");
+                Marker();
             }
         }
     }     
@@ -186,7 +210,7 @@ $(document).ready(function(){
     });
     
     
-    /* 'New Player' button - hard resets game and returns to icon select screen */    
+  /* 'New Player' button - hard resets game and returns to icon select screen */    
     $('#reset').on('click', function() {
         console.log("### HARD RESET");
         // remove display of player markers
@@ -199,6 +223,16 @@ $(document).ready(function(){
         } 
         // display the game-select choice box
         $('#game-select').removeClass('hidden'); 
+        // hide the player indicator flag 
+        $('#indicator').toggleClass('hidden');
+        // reset player indicator flag
+        if ($("#x-turn").hasClass('shown')) {
+            $("#x-turn").removeClass('shown');
+            $('#x-turn').toggleClass('hidden');
+        } else if ($("#o-turn").hasClass('shown')) {
+            $("#o-turn").removeClass('shown');
+            $('#o-turn').toggleClass('hidden');
+        }
         // hide the game board 
         $('#game-board').toggleClass('hidden');
         // hide the game-status display (winner status)
@@ -576,11 +610,7 @@ $(document).ready(function(){
                     }
                 } else if (valPresent == -1) { 
                   csArrPos++; 
-                } /* else {  // if the computer hasn't played any of the winning combinations
-                    // select random untaken box ?
-                    /* cycle through 1-9 until find one not in userSquaresArr or compSquaresArr? */
-                    /* merge both & then check? 
-                } */
+                } 
             };
         };
     }
@@ -592,7 +622,6 @@ $(document).ready(function(){
             //computer plays
         if (boxCount === 1) {
             if (boxID === '5') {
-                //compNextMove = PlayCorner();
                 PlayCorner();
             } else if ((boxID === '1') || (boxID === '3') || (boxID === '7') || (boxID === '9')) {
                 PlayCenter(); 
@@ -619,32 +648,17 @@ $(document).ready(function(){
                     console.log("computer's next move can go in box " + compNextMove + " because it's not taken");
                 }
             }
-          
-        //    console.log("Computer's next move: " + compNextMove);
-         /*   if ($('#'+compNextMove).hasClass('taken')) {
-                console.log("the move suggested by BlockLogic " + compNextMove + " is taken. Recalculating.")
-                // if the user plays a corner, respond with an adjacent available edge box
-                if ((boxID === '1') || (boxID === '3') || (boxID === '7') || (boxID === '9')) {
-                    compNextMove = PlayAdjEdge(); 
-                // if the user plays an edge, respond with an adjacent available corner box
-                } else if ((boxID === '2') || (boxID === '4') || (boxID === '6') || (boxID === '8')) {
-                    compNextMove = PlayCorner();
-                } else if (boxID === '5') {
-                    PlayCorner();
-                } */
-            //}
-            //else {    
-            }
+        }
         if (computerIcon === 'X') {
             $('#'+compNextMove)
                 .children('.player-icon-x')
-                .delay(300)
-                .fadeIn(300);                                    
+                .delay(500)
+                .fadeIn(500);                                    
         } else {
             $('#'+compNextMove)
                 .children('.player-icon-o')
-                .delay(300)
-                .fadeIn(300);  
+                .delay(500)
+                .fadeIn(500);  
         }
         $('#'+compNextMove).addClass('taken');    
         compSquaresArr.push(compNextMove);
