@@ -52,85 +52,41 @@ $(document).ready(function(){
     
 
   /* check if user won */ 
-    const UserWin = function() {
-        var usArrPos = 0;
-        userSquaresArr = userSquaresArr.sort(Ascending);
-        for (var wpVal = 0; wpVal < winningPatterns.length; wpVal++ ) { 
-            if (usArrPos >= usArrLen) { 
-              usArrPos = 0; 
-            }
-            var checkWP = winningPatterns[wpVal].slice(); 
-            console.log("* WinningPattern " + wpVal + ": " + checkWP);
-            console.log("user has played " + userSquaresArr);
-            var wpPos = 0;    
-            for (var wpCurVal = 0; wpCurVal <= winningPatterns[wpPos].length; wpCurVal++ ) {
-                var userValue = userSquaresArr[usArrPos],
-                    valPresent = checkWP.indexOf(userValue, 0); // check if the userValue is present in the winningPattern subarray
-                console.log(userValue + " is current UserValue");
-                if (valPresent > -1) {
-                    checkWP.splice(valPresent, 1); // if present, remove it from the wp subarray
-                    var checkWPleng = checkWP.length;    
-                    console.log("the userValue is present in the current winningPattern at position " + valPresent)
-                    usArrPos++; 
-                    console.log("length of checkWP:" + checkWP.length);
-                    if (checkWPleng < 1) { // if the wp subarray is empty
-                        console.log('the user has played a winningPattern');
-                        return true; // create a 'true' value to return? 
-                    }
-                } else if (valPresent == -1) { 
-                    usArrPos++; 
-                    // not sure this part is necessary 
-                    if (wpVal === winningPatterns.length -1) {
-                        console.log("wpVal is: " + wpVal);
-                        return false;
-                    }
-                } 
-            }
+    const UserWins = function () {
+        for (var i = 0; i <= winningPatterns.length - 1; i++) {
+            var wpTest = winningPatterns[i];
+            var a1 = wpTest[0],
+                a2 = wpTest[1],
+                a3 = wpTest[2];
+            console.log("UserWins - a1: " + a1 + " a2: " + a2 + " a3: " + a3);
+            if ((userSquaresArr.includes(a1)) && (userSquaresArr.includes(a2)) && (userSquaresArr.includes(a3))) {
+                console.log("user has played a winning pattern!");
+                return true;
+            } 
         }
     }
+
     
   /* check if computer won */ 
-    const CompWin = function() {
-        var csArrPos = 0;
-        compSquaresArr = compSquaresArr.sort(Ascending);
-        for (var wpVal = 0; wpVal < winningPatterns.length; wpVal++ ) { 
-            if (csArrPos >= csArrLen) { 
-              csArrPos = 0; 
-            }
-            var checkWP = winningPatterns[wpVal].slice(); 
-            console.log("* WinningPattern " + wpVal + ": " + checkWP);
-            console.log("computer has played " + compSquaresArr);
-            var wpPos = 0;    
-            for (var wpCurVal = 0; wpCurVal <= winningPatterns[wpPos].length; wpCurVal++ ) {
-                var compValue = compSquaresArr[csArrPos],
-                    valPresent = checkWP.indexOf(compValue, 0); // check if the userValue is present in the winningPattern subarray
-                console.log(compValue + " is current CompValue");
-                if (valPresent > -1) {
-                    checkWP.splice(valPresent, 1); // if present, remove it from the wp subarray
-                    var checkWPleng = checkWP.length;    
-                    console.log("the userValue is present in the current winningPattern at position " + valPresent)
-                    csArrPos++; 
-                    console.log("length of checkWP:" + checkWP.length);
-                    if (checkWPleng === 0) { // if the wp subarray is empty
-                        console.log('the computer has played a winningPattern');
-                        return true; 
-                    }
-                } else if (valPresent == -1) { 
-                    csArrPos++; 
-                    // not sure this part is necessary 
-                    if (wpVal === winningPatterns.length -1) {
-                        console.log("wpVal is: " + wpVal);
-                        return false;
-                    }
-                } 
-            }
+    const CompWins = function () {
+        for (var i = 0; i <= winningPatterns.length - 1; i++) {
+            var wpTest = winningPatterns[i];
+            var a1 = wpTest[0],
+                a2 = wpTest[1],
+                a3 = wpTest[2];
+            console.log("CompWins - a1: " + a1 + " a2: " + a2 + " a3: " + a3);
+            if ((compSquaresArr.includes(a1)) && (compSquaresArr.includes(a2)) && (compSquaresArr.includes(a3))) {
+                console.log("computer has played a winning pattern!");
+                return true;
+            } 
         }
     }
+  
    
   /* check for winners */      
     const CheckWinners = function() {
-        userWin = UserWin(); 
-        compWin = CompWin(); 
+        userWin = UserWins(); 
+        compWin = CompWins(); 
         console.log("userWin: " + userWin + " and compWin: " + compWin);
         if (userWin === true) {
             return userWin;
