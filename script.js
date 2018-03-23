@@ -399,7 +399,7 @@ $(document).ready(function(){
             var isPres = possibleSquares[num],
                 valPresentTotal = totalSquares.includes(isPres);
             if (valPresentTotal === true) {
-                num++;
+                console.log(num + "is already played. checking next box");
             } else {
                 compNextMove = isPres; 
                 console.log('next random move should be ' + compNextMove);
