@@ -149,9 +149,46 @@ $(document).ready(function(){
     }     
     
     
-  /* 'Play Again' button - resets game */    
+  /* 'Play Again' button - resets game board */    
     $('#again').on('click', function() {
-        console.log("### RESET");
+        console.log("### NEW GAME");
+        // remove display of player markers
+        if ($('.boxes').hasClass('taken')) {
+            $('.boxes img').fadeOut(500);
+        }
+        // unmark the boxes as 'taken'
+        if ($('.boxes').hasClass('taken')) {
+            $('.boxes').removeClass('taken'); 
+        } 
+        // hide the game-status display (winner status)
+        $('#game-status').toggleClass('hidden');
+        // rehide 'tied game' notification to ready for subsequent games
+        if (boxCount === 9) { 
+            if ($('#tied-game').hasClass('displayed')) {
+                $('#tied-game').toggleClass('hidden').removeClass('displayed');
+            } else if ($('#comp-win').hasClass('displayed')) {
+                $('#comp-win').toggleClass('hidden').removeClass('displayed'); 
+            } else if ($('#user-win').hasClass('displayed')) {
+                $('#user-win').toggleClass('hidden').removeClass('displayed'); 
+            }
+        } else {
+            if ($('#comp-win').hasClass('displayed')) {
+                $('#comp-win').toggleClass('hidden').removeClass('displayed'); 
+            } else if ($('#user-win').hasClass('displayed')) {
+                $('#user-win').toggleClass('hidden').removeClass('displayed'); 
+            }
+        }
+        // clear boxCount and other tracking data 
+        userSquaresArr = [],
+        compSquaresArr = [],
+        boxID = '',
+        boxCount = 0;
+    });
+    
+    
+    /* 'New Player' button - hard resets game and returns to icon select screen */    
+    $('#reset').on('click', function() {
+        console.log("### HARD RESET");
         // remove display of player markers
         if ($('.boxes').hasClass('taken')) {
             $('.boxes img').fadeOut(500);

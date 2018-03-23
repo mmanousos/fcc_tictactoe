@@ -81,12 +81,12 @@ body {
 .game-status {
     background-color: rgba(67, 67, 67, 0.29);
     border-radius: 5px;
-    font-size: 125%;
     margin: 30px 0 15px 0;
 }
 
 .status-display {
     margin: 30px 0 15px 0;
+    font-size: 200%;
 }
 
 #user-win {
@@ -101,12 +101,19 @@ body {
     color: #57209F;
 }
 
-.again {
-    color: #B05CE9;
+button {
     background-color: #0E021E;
     padding: 5px 10px;
     border-radius: 5px;
     margin-bottom: 30px;
+}
+
+.again {
+    color: #B05CE9;
+}
+
+.reset {
+    color: #D11A51;
 }
 
 /* credit info */
