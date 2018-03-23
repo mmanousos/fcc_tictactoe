@@ -44,7 +44,6 @@ $(document).ready(function(){
         computerIcon = 'O';
         HideSelect();
         $('#x-turn').toggleClass('hidden').addClass('shown');
-        console.log('display X');
     });   
     
     $( '#circle' ).on('click', function() {
@@ -52,19 +51,16 @@ $(document).ready(function(){
         computerIcon = 'X';
         HideSelect();
         $('#o-turn').toggleClass('hidden').addClass('shown');
-        console.log('display O');
     }); 
     
     const Marker = function () {
         if (boxCount % 2 !== 0 ) { // computer's marker
-            console.log("computer's marker should show");
             if (userIcon == 'X') {
                 $('#x-turn').fadeOut(300).removeClass('shown');
             } else if (userIcon = 'O') {
                 $('#o-turn').fadeOut(300).removeClass('shown');
             }
         } else { // user's marker
-            console.log("user's marker should show");
             if (userIcon == 'X') {
                 $('#x-turn').fadeIn(500).addClass('shown');
             } else if (userIcon = 'O') {
@@ -282,7 +278,6 @@ $(document).ready(function(){
             $(this).addClass('taken');
             boxCount++; 
                 console.log('boxCount is = ' + boxCount + ' and user played last');
-                console.log("user played " + boxID + ' (from UserPlay function)');
             DeterminePlayer();
         });
     };
@@ -548,7 +543,6 @@ $(document).ready(function(){
                 } else if (valPresent == -1) { 
                     usArrPos++; 
                     if (wpVal === winningPatterns.length -1) {
-                        console.log("wpVal is: " + wpVal);
                         wpVal++; 
                         console.log("none of the moves played so far are within a winning pattern so block randomly");
                         compNextMove = RandomPlay();
@@ -617,8 +611,6 @@ $(document).ready(function(){
         
     
     const ComputerPlay = function() {
-        console.log("user played = " + boxID + ' (from ComputerPlay function)');
-        console.log('there are ' + boxCount + ' squares filled (from ComputerPlay function)');
             //computer plays
         if (boxCount === 1) {
             if (boxID === '5') {
