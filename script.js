@@ -58,7 +58,6 @@ $(document).ready(function(){
             var a1 = wpTest[0],
                 a2 = wpTest[1],
                 a3 = wpTest[2];
-            console.log("UserWins - a1: " + a1 + " a2: " + a2 + " a3: " + a3);
             if ((userSquaresArr.includes(a1)) && (userSquaresArr.includes(a2)) && (userSquaresArr.includes(a3))) {
                 console.log("user has played a winning pattern!");
                 return true;
@@ -139,45 +138,6 @@ $(document).ready(function(){
             console.log("It's the user's turn.");
             }
         }
-        
-        
-  /*      if (boxCount >= 5) {
-            userWin = UserWin(); 
-            compWin = CompWin();            
-            if (boxCount === 9) {
-                // if userSquaresArr contains a winningPattern, display 'user-win' message           
-                if (userWin === true) {
-                    $('#user-win').toggleClass('hidden').addClass('displayed'); 
-                // else if compSquaresArr contains winningPattern, display 'comp-win' message
-                } else if (compWin === true) { 
-                    $('#comp-win').toggleClass('hidden').addClass('displayed');        
-                // else display 'tied game' announcement 
-                } else if ((userWin !== true) && (compWin!== true)) { 
-                    $('#tied-game').toggleClass('hidden').addClass('displayed'); 
-                }
-            // then clear the game board and display the message
-                $('#game-status').toggleClass('hidden');
-
-            } else if (boxCount % 2 !== 0) {
-                // check if player won first, if no, then 
-                if (userWin === true) {
-                    $('#user-win').toggleClass('hidden').addClass('displayed');
-                    $('#game-status').toggleClass('hidden');
-                } else {
-                    ComputerPlay();
-                }
-            } else {
-                // check if computer won, if no, then     
-                if (compWin === true) {
-                    $('#comp-win').toggleClass('hidden').addClass('displayed');
-                    $('#game-status').toggleClass('hidden');
-                } else {
-                    console.log("It's the user's turn.");
-                }
-            }  
-        } else {
-            ComputerPlay();
-        } */
     }     
     
     
@@ -253,7 +213,7 @@ $(document).ready(function(){
         UserPlay();
     } 
     
-  /* respond to center or edge play with corner */ /* REVISE */
+  /* respond to center or edge play with corner */ 
     const PlayCorner = function() {
         // for first move
         if (boxCount === 1) { 
@@ -387,34 +347,42 @@ $(document).ready(function(){
         }
     };
     
-    /* respond to corner with adjacent edge */ /* ADDITIONS NEEDED */
+    /* respond to corner with adjacent edge */ 
     const PlayAdjEdge = function() {            
         if (boxID === '1') {
             if ($('#2').hasClass('taken')) {
                 compNextMove = '4';
-            } else {
+            } else if ($('#4').hasClass('taken')) {
                 compNextMove = '2';
+            } else {
+                compNextMove = RandomPlay();
             }
         } else if (boxID === '3') {
             if ($('#2').hasClass('taken')) {
                 compNextMove = '6';
-            } else {
+            } else if ($('#6').hasClass('taken')) {
                 compNextMove = '2';
+            } else {
+                compNextMove = RandomPlay();
             }
         } else if (boxID === '7') {
             if ($('#6').hasClass('taken')) {
                 compNextMove = '8';
-            } else {
+            } else if ($('#8').hasClass('taken')) {
                 compNextMove = '4';
+            } else {
+                compNextMove = RandomPlay();
             }
+        
         } else if (boxID === '9') {
             if ($('#6').hasClass('taken')) {
                 compNextMove = '8';
-            } else {
+            } else if ($('#8').hasClass('taken')) {
                 compNextMove = '6';
-            }        
+            } else {
+                compNextMove = RandomPlay();
+            }       
         }
-        //*** need to add logic in case both adjacent edges are taken ***//
     };
        
     
