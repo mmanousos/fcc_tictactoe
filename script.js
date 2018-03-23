@@ -74,7 +74,6 @@ $(document).ready(function(){
             var a1 = wpTest[0],
                 a2 = wpTest[1],
                 a3 = wpTest[2];
-            console.log("CompWins - a1: " + a1 + " a2: " + a2 + " a3: " + a3);
             if ((compSquaresArr.includes(a1)) && (compSquaresArr.includes(a2)) && (compSquaresArr.includes(a3))) {
                 console.log("computer has played a winning pattern!");
                 return true;
@@ -430,11 +429,11 @@ $(document).ready(function(){
 
         for (var num = 0; num <= possibleSquares.length; num++) {
             var isPres = possibleSquares[num],
-                valPresentTotal = totalSquares.indexOf(isPres, 0);
-            if (valPresentTotal > -1) {
+                valPresentTotal = totalSquares.includes(isPres);
+            if (valPresentTotal === true) {
                 num++;
             } else {
-                compNextMove = num; 
+                compNextMove = isPres; 
                 console.log('next random move should be ' + compNextMove);
                 if ($('#'+compNextMove).hasClass('taken')) {
                     // go to next value in possibleSquares
@@ -443,8 +442,6 @@ $(document).ready(function(){
                     return compNextMove;
                     break;
                 }
-                // return compNextMove;
-                
             } 
         }
     }; 
